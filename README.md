@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/oberlab/jeanCloud/main/img/jean.png" width="300"/>
+<img src="https://raw.githubusercontent.com/oberlab/jeanCloud/main/img/jean.png" width="400"/>
 
 </p>
 <br>
