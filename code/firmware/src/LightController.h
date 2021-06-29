@@ -9,6 +9,9 @@ class LightController
         void setRGB(int _red, int _green, int _blue);
         void setIntenstiy(int _intenstiy);
         void setPattern();
+        int getRed();
+        int getGreen();
+        int getBlue();
 
     private:
         int red;

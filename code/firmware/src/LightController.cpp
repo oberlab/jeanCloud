@@ -1,11 +1,21 @@
 #include "Arduino.h"
 #include "LightController.h"
 
-void LightController::on() {
+LightController::LightController() {
+  red = 255;
+  blue = 255;
+  green = 255;
+  intensity = 255;
+}
 
+void LightController::on() {
+    FastLED.setBrightness(intensity);
+    FastLED.show();
 }
 
 void LightController::off() {
+    FastLED.setBrightness(0);
+    FastLED.show();
 
 }
 
@@ -20,3 +30,9 @@ void LightController::setIntenstiy(int _intenstiy) {
 void LightController::setPattern() {
 
 }
+
+int LightController::getRed() { return red; }
+
+int LightController::getGreen() { return green; }
+
+int LightController::getBlue() { return blue; }
