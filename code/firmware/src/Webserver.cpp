@@ -28,6 +28,14 @@ void Webserver::setup() {
     lightController.on();
     request->send(200, "text/plain", "OK");
   });
+
+  server.on("/lamp/off", HTTP_GET, [&] (AsyncWebServerRequest *request) {
+
+    Serial.println("Lamp off my G");
+
+    lightController.off();
+    request->send(200, "text/plain", "OK");
+  });
 }
 
 void Webserver::begin() { server.begin(); }
