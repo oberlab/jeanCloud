@@ -1,6 +1,11 @@
 #include "LightController.h"
+#include "Webserver.h"
 #include <FastLED.h>
 #include <WiFi.h>
+
+
+const char* ssid = "ALK_mobil";
+const char* password = "urlaubingseng20";
 
 // fastLED configuration:
 #define NUM_LEDS 27        // set number of LEDs here
@@ -10,12 +15,28 @@
 CRGB leds[NUM_LEDS]; // Define the array of ledsw
 
 LightController lightController = LightController();
+Webserver webserver = Webserver();
 
 void setup() {
+    Serial.begin(115200);
+
+    // Connect to Wi-Fi
+    WiFi.begin(ssid, password);
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(1000);
+      Serial.println("Connecting to WiFi..");
+    }
+
+    // Print ESP Local IP Address
+    Serial.println(WiFi.localIP());
+
     FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
     fill_solid( leds, NUM_LEDS, CRGB(lightController.getRed(), lightController.getGreen(), lightController.getBlue()));
     FastLED.setBrightness(sliderValue.toInt());
     FastLED.show();
+
+    webserver.setup();
+    webserver.begin();
 }
 
 void loop() {
