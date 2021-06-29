@@ -7,7 +7,7 @@ String processor(const String& var) {
 }
 
 Webserver::Webserver() {
-    server = AsyncWebServer(80)
+    server(80);
 }
 
 void Webserver::setup() {

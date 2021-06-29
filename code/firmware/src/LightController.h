@@ -8,7 +8,7 @@ class LightController
         void on();
         void off();
         void setRGB(int _red, int _green, int _blue);
-        void setIntenstiy(int _intenstiy);
+        void setIntenstiy(int _intensity);
         void setPattern();
         int getRed();
         int getGreen();
@@ -18,7 +18,7 @@ class LightController
         int red;
         int green;
         int blue;
-        int intenstiy;
+        int intensity;
 };
 
 

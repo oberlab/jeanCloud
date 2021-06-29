@@ -10,22 +10,23 @@ LightController::LightController() {
 }
 
 void LightController::on() {
-    FastLED.setBrightness(intensity);
-    FastLED.show();
+  FastLED.setBrightness(intensity);
+  FastLED.show();
 }
 
 void LightController::off() {
-    FastLED.setBrightness(0);
-    FastLED.show();
-
+  FastLED.setBrightness(0);
+  FastLED.show();
 }
 
 void LightController::setRGB(int _red, int _green, int _blue) {
-
+  red = _red;
+  green = _green;
+  blue = _blue;
 }
 
-void LightController::setIntenstiy(int _intenstiy) {
-
+void LightController::setIntenstiy(int _intensity) {
+  intensity = _intensity;
 }
 
 void LightController::setPattern() {
