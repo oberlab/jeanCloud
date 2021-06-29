@@ -2,6 +2,7 @@
 #include "Webserver.h"
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
+#include "SPIFFS.h"
 
 
 String processor(const String& var) {
