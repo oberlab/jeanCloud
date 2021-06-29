@@ -18,7 +18,7 @@ const char* password = "urlaubingseng20";
 CRGB leds[NUM_LEDS]; // Define the array of ledsw
 
 LightController lightController = LightController();
-Webserver webserver = Webserver();
+Webserver webserver = Webserver(lightController);
 
 void initFS() {
   if (!SPIFFS.begin()) {
