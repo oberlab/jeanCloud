@@ -4,6 +4,7 @@
 #include "./src/Webserver.h"
 #include <FastLED.h>
 #include <WiFi.h>
+#include "SPIFFS.h"
 
 
 const char* ssid = "ALK_mobil";
@@ -19,8 +20,19 @@ CRGB leds[NUM_LEDS]; // Define the array of ledsw
 LightController lightController = LightController();
 Webserver webserver = Webserver();
 
+void initFS() {
+  if (!SPIFFS.begin()) {
+    Serial.println("An error has occurred while mounting SPIFFS");
+  }
+  else{
+   Serial.println("SPIFFS mounted successfully");
+  }
+}
+
 void setup() {
     Serial.begin(115200);
+
+    initFS();
 
     // Connect to Wi-Fi
     WiFi.begin(ssid, password);
