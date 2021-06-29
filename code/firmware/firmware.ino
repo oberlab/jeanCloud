@@ -1,5 +1,7 @@
-#include "LightController.h"
-#include "Webserver.h"
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
+#include "./src/LightController.h"
+#include "./src/Webserver.h"
 #include <FastLED.h>
 #include <WiFi.h>
 
@@ -32,7 +34,7 @@ void setup() {
 
     FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
     fill_solid( leds, NUM_LEDS, CRGB(lightController.getRed(), lightController.getGreen(), lightController.getBlue()));
-    FastLED.setBrightness(sliderValue.toInt());
+    FastLED.setBrightness(255);
     FastLED.show();
 
     webserver.setup();

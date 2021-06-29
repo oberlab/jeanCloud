@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include "LightController.h"
+#include <FastLED.h>
 
 LightController::LightController() {
   red = 255;
