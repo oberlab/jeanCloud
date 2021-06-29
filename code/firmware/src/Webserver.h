@@ -7,6 +7,7 @@
 class Webserver
 {
     public:
+        Webserver();
         void setup();
         void begin();
 

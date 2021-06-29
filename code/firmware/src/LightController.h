@@ -4,6 +4,7 @@
 class LightController
 {
     public:
+        LightController();
         void on();
         void off();
         void setRGB(int _red, int _green, int _blue);
