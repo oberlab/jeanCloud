@@ -21,7 +21,7 @@ void Webserver::setup() {
 
   server.serveStatic("/", SPIFFS, "/");
 
-  server.on("/lamp/on", HTTP_GET, [] (AsyncWebServerRequest *request) {
+  server.on("/lamp/on", HTTP_GET, [&] (AsyncWebServerRequest *request) {
 
     Serial.println("Lamp on my G");
 
