@@ -15,6 +15,7 @@ LightController::LightController() {
   green = 255;
   intensity = 255;
   FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
+  fill_solid( leds, NUM_LEDS, CRGB(255, 255, 255));
 }
 
 void LightController::on() {
