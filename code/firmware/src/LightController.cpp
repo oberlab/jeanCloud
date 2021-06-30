@@ -2,11 +2,12 @@
 #include "LightController.h"
 #include <FastLED.h>
 
-LightController::LightController() {
+LightController::LightController(int _NUM_LEDS) {
   red = 255;
   blue = 255;
   green = 255;
   intensity = 255;
+  NUM_LEDS = _NUM_LEDS;
 }
 
 void LightController::on() {
@@ -23,6 +24,7 @@ void LightController::setRGB(int _red, int _green, int _blue) {
   red = _red;
   green = _green;
   blue = _blue;
+  fill_solid( leds, NUM_LEDS, CRGB(red, green, blue));
 }
 
 void LightController::setIntenstiy(int _intensity) {

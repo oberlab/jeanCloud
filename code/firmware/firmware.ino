@@ -17,7 +17,7 @@ const char* password = "urlaubingseng20";
 #define COLOR_ORDER GRB
 CRGB leds[NUM_LEDS]; // Define the array of ledsw
 
-LightController lightController = LightController();
+LightController lightController = LightController(NUM_LEDS);
 Webserver webserver = Webserver(lightController);
 
 void initFS() {
@@ -31,12 +31,12 @@ void initFS() {
 
 void setup() {
     Serial.begin(115200);
-    
+
     FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
     fill_solid( leds, NUM_LEDS, CRGB(255, 0, 0));
     FastLED.setBrightness(250);
     FastLED.show();
-    
+
     initFS();
 
     // Connect to Wi-Fi
@@ -49,7 +49,7 @@ void setup() {
     // Print ESP Local IP Address
     Serial.println(WiFi.localIP());
 
-    
+
 
     webserver.setup();
     webserver.begin();
