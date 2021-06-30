@@ -55,25 +55,31 @@ void Webserver::setup() {
     const char* PARAM_INPUT_RED = "red";
     const char* PARAM_INPUT_GREEN = "green";
     const char* PARAM_INPUT_BLUE = "blue";
+
+    int red = lightController.getRed();
+    int green = lightController.getGreen();
+    int blue = lightController.getBlue();
+
     String inputMessage;
     if (request->hasParam(PARAM_INPUT_RED)) {
       inputMessage = request->getParam(PARAM_INPUT_RED)->value();
-      lightController.setRGB(std::atoi(inputMessage.c_str()), lightController.getGreen(), lightController.getBlue());
-      lightController.on();
+      red = std::atoi(inputMessage.c_str());
     }
     else if (request->hasParam(PARAM_INPUT_GREEN)) {
       inputMessage = request->getParam(PARAM_INPUT_GREEN)->value();
-      lightController.setRGB(lightController.getRed(), std::atoi(inputMessage.c_str()), lightController.getBlue());
-      lightController.on();
+      green = std::atoi(inputMessage.c_str());
     }
     else if (request->hasParam(PARAM_INPUT_BLUE)) {
       inputMessage = request->getParam(PARAM_INPUT_BLUE)->value();
-      lightController.setRGB(lightController.getRed(), lightController.getGreen(), std::atoi(inputMessage.c_str()));
-      lightController.on();
+      blue = std::atoi(inputMessage.c_str());
     }
     else {
       inputMessage = "No message sent";
     }
+
+    lightController.setRGB(red, green, blue);
+    lightController.on();
+
     Serial.println(inputMessage);
     request->send(200, "text/plain", "OK");
   });
