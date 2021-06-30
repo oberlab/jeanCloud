@@ -42,14 +42,14 @@ void Webserver::setup() {
      String inputMessage;
      if (request->hasParam(PARAM_INPUT)) {
        inputMessage = request->getParam(PARAM_INPUT)->value();
-       lightController.setIntenstiy(std::stoi(inputMessage));
+       lightController.setIntenstiy(std::atoi(inputMessage.c_str()));
+       lightController.on();
     }
     else {
       inputMessage = "No message sent";
     }
     Serial.println(inputMessage);
     request->send(200, "text/plain", "OK");
-  });
-}
+  });}
 
 void Webserver::begin() { server.begin(); }
