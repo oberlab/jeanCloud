@@ -31,7 +31,12 @@ void initFS() {
 
 void setup() {
     Serial.begin(115200);
-
+    
+    FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
+    fill_solid( leds, NUM_LEDS, CRGB(255, 0, 0));
+    FastLED.setBrightness(250);
+    FastLED.show();
+    
     initFS();
 
     // Connect to Wi-Fi
@@ -44,10 +49,7 @@ void setup() {
     // Print ESP Local IP Address
     Serial.println(WiFi.localIP());
 
-    FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
-    fill_solid( leds, NUM_LEDS, CRGB(lightController.getRed(), lightController.getGreen(), lightController.getBlue()));
-    FastLED.setBrightness(255);
-    FastLED.show();
+    
 
     webserver.setup();
     webserver.begin();
