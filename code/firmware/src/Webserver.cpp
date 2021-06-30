@@ -59,15 +59,18 @@ void Webserver::setup() {
     if (request->hasParam(PARAM_INPUT_RED)) {
       inputMessage = request->getParam(PARAM_INPUT_RED)->value();
       lightController.setRGB(std::atoi(inputMessage.c_str()), lightController.getGreen(), lightController.getBlue());
-    } 
+      lightController.on();
+    }
     else if (request->hasParam(PARAM_INPUT_GREEN)) {
       inputMessage = request->getParam(PARAM_INPUT_GREEN)->value();
       lightController.setRGB(lightController.getRed(), std::atoi(inputMessage.c_str()), lightController.getBlue());
-    } 
+      lightController.on();
+    }
     else if (request->hasParam(PARAM_INPUT_BLUE)) {
       inputMessage = request->getParam(PARAM_INPUT_BLUE)->value();
       lightController.setRGB(lightController.getRed(), lightController.getGreen(), std::atoi(inputMessage.c_str()));
-    } 
+      lightController.on();
+    }
     else {
       inputMessage = "No message sent";
     }
