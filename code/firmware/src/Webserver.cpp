@@ -60,21 +60,20 @@ void Webserver::setup() {
     int green = lightController.getGreen();
     int blue = lightController.getBlue();
 
-    String inputMessage;
+    String inputMessage = "No message sent";;
     if (request->hasParam(PARAM_INPUT_RED)) {
       inputMessage = request->getParam(PARAM_INPUT_RED)->value();
       red = std::atoi(inputMessage.c_str());
     }
-    else if (request->hasParam(PARAM_INPUT_GREEN)) {
+
+    if (request->hasParam(PARAM_INPUT_GREEN)) {
       inputMessage = request->getParam(PARAM_INPUT_GREEN)->value();
       green = std::atoi(inputMessage.c_str());
     }
-    else if (request->hasParam(PARAM_INPUT_BLUE)) {
+
+    if (request->hasParam(PARAM_INPUT_BLUE)) {
       inputMessage = request->getParam(PARAM_INPUT_BLUE)->value();
       blue = std::atoi(inputMessage.c_str());
-    }
-    else {
-      inputMessage = "No message sent";
     }
 
     lightController.setRGB(red, green, blue);
