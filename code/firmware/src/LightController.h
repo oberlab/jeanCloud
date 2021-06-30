@@ -1,10 +1,11 @@
 #ifndef LightController_h
 #define LightController_h
+#include <FastLED.h>
 
 class LightController
 {
     public:
-        LightController(int _NUM_LEDS);
+        LightController();
         void on();
         void off();
         void setRGB(int _red, int _green, int _blue);
@@ -19,7 +20,6 @@ class LightController
         int green;
         int blue;
         int intensity;
-        int NUM_LEDS;
 };
 
 

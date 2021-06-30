@@ -2,12 +2,19 @@
 #include "LightController.h"
 #include <FastLED.h>
 
-LightController::LightController(int _NUM_LEDS) {
+// fastLED configuration:
+#define NUM_LEDS 27        // set number of LEDs here
+#define LED_PIN 14
+#define LED_TYPE WS2811
+#define COLOR_ORDER GRB
+CRGB leds[NUM_LEDS]; // Define the array of ledsw
+
+LightController::LightController() {
   red = 255;
   blue = 255;
   green = 255;
   intensity = 255;
-  NUM_LEDS = _NUM_LEDS;
+  FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
 }
 
 void LightController::on() {
