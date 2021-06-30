@@ -7,5 +7,9 @@ async function toogleLight(element) {
 }
 
 async function setIntensity(element) {
-    console.log(element.value);
+    await fetch("/lamp/intenstiy?value=" + element.value);
+}
+
+async function setRGB(element, color) {
+    await fetch("/lamp/color?" + color + "=" + element.value);
 }

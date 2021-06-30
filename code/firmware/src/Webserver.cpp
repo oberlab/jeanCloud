@@ -36,6 +36,20 @@ void Webserver::setup() {
     lightController.off();
     request->send(200, "text/plain", "OK");
   });
+
+   server.on("/lamp/intenstiy", HTTP_GET, [&] (AsyncWebServerRequest *request) {
+     const char* PARAM_INPUT = "value";
+     String inputMessage;
+     if (request->hasParam(PARAM_INPUT)) {
+       inputMessage = request->getParam(PARAM_INPUT)->value();
+       lightController.setIntenstiy(std::stoi(inputMessage));
+    }
+    else {
+      inputMessage = "No message sent";
+    }
+    Serial.println(inputMessage);
+    request->send(200, "text/plain", "OK");
+  });
 }
 
 void Webserver::begin() { server.begin(); }
