@@ -3,14 +3,29 @@
 <head>
     <title>JeanCloud</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
-    <div class="topnav">
-        <h1>LED Color</h1>
-    </div>
+    <img src="OBERLAB_Logo_solo_sw-dark_CMYK.svg" style="max-width: 300px;">
     <div class="content">
+        <div class="card-grid">
+            <div class="card">
+                <p class="card-title">Licht</p>
+                <label class="oberlab-switch">
+                    <input type="checkbox" onchange="toogleLight(this)" checked>
+                    <span class="oberlab-slider round"></span>
+                </label>
+            </div>
+            <div class="card">
+                <p class="card-title">Helligkeit</p>
+                <p class="switch">
+                    <input type="range" onchange="setIntensity(this)" id="slider4" min="0" max="255" step="1" value ="255" class="slider">
+                </p>
+                <p class="state">Intensit&auml;t: <span id="sliderValue4"></span></p>
+            </div>
+        </div>
+        <br />
         <div class="card-grid">
             <div class="card">
                 <p class="card-title">Rot</p>
@@ -27,20 +42,13 @@
                 <p class="state">Intensit&auml;t: <span id="sliderValue2"></span></p>
             </div>
             <div class="card">
-                <p class="card-title"> Blau </p>
+                <p class="card-title">Blau</p>
                 <p class="switch">
                     <input type="range" onchange="updateSliderPWM(this)" id="slider3" min="0" max="255" step="1" value ="255" class="slider">
                 </p>
                 <p class="state">Intensit&auml;t: <span id="sliderValue3"></span></p>
             </div>
-            <div class="card">
-                <p class="card-title">Helligkeit</p>
-                <p class="switch">
-                    <input type="range" onchange="updateSliderPWM(this)" id="slider4" min="0" max="255" step="1" value ="255" class="slider">
-                </p>
-                <p class="state">Intensit&auml;t: <span id="sliderValue4"></span></p>
-        </div>
+            
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
