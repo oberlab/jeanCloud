@@ -37,19 +37,43 @@ void Webserver::setup() {
     request->send(200, "text/plain", "OK");
   });
 
-   server.on("/lamp/intenstiy", HTTP_GET, [&] (AsyncWebServerRequest *request) {
-     const char* PARAM_INPUT = "value";
-     String inputMessage;
-     if (request->hasParam(PARAM_INPUT)) {
-       inputMessage = request->getParam(PARAM_INPUT)->value();
-       lightController.setIntenstiy(std::atoi(inputMessage.c_str()));
-       lightController.on();
+  server.on("/lamp/intenstiy", HTTP_GET, [&] (AsyncWebServerRequest *request) {
+    const char* PARAM_INPUT = "value";
+    String inputMessage;
+    if (request->hasParam(PARAM_INPUT)) {
+      inputMessage = request->getParam(PARAM_INPUT)->value();
+      lightController.setIntenstiy(std::atoi(inputMessage.c_str()));
+      lightController.on();
+    } else {
+      inputMessage = "No message sent";
     }
+    Serial.println(inputMessage);
+    request->send(200, "text/plain", "OK");
+  });
+
+  server.on("/lamp/color", HTTP_GET, [&] (AsyncWebServerRequest *request) {
+    const char* PARAM_INPUT_RED = "red";
+    const char* PARAM_INPUT_GREEN = "green";
+    const char* PARAM_INPUT_BLUE = "blue";
+    String inputMessage;
+    if (request->hasParam(PARAM_INPUT_RED)) {
+      inputMessage = request->getParam(PARAM_INPUT_RED)->value();
+      lightController.setRGB(std::atoi(inputMessage.c_str()), lightController.getGreen(), lightController.getBlue());
+    } 
+    else if (request->hasParam(PARAM_INPUT_GREEN)) {
+      inputMessage = request->getParam(PARAM_INPUT_GREEN)->value();
+      lightController.setRGB(lightController.getRed(), std::atoi(inputMessage.c_str()), lightController.getBlue());
+    } 
+    else if (request->hasParam(PARAM_INPUT_BLUE)) {
+      inputMessage = request->getParam(PARAM_INPUT_BLUE)->value();
+      lightController.setRGB(lightController.getRed(), lightController.getGreen(), std::atoi(inputMessage.c_str()));
+    } 
     else {
       inputMessage = "No message sent";
     }
     Serial.println(inputMessage);
     request->send(200, "text/plain", "OK");
-  });}
+  });
+}
 
 void Webserver::begin() { server.begin(); }
