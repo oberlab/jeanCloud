@@ -10,8 +10,8 @@
 #include "SPIFFS.h"
 
 
-const char* ssid = "ALK_mobil";
-const char* password = "urlaubingseng20";
+const String ssid = "ALK_mobil";
+const String password = "urlaubingseng20";
 
 // Define the connections pins for display:
 #define CLK 18
@@ -54,7 +54,7 @@ void setup() {
     }
 
     // Connect to Wi-Fi
-    WiFi.begin(passwordController.getSSID(), passwordController.getPassword());
+    WiFi.begin(passwordController.getSSID().c_str(), passwordController.getPassword().c_str());
     while (WiFi.status() != WL_CONNECTED) {
       delay(1000);
       Serial.println("Connecting to WiFi..");

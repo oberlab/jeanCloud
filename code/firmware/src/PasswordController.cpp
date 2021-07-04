@@ -24,31 +24,33 @@ PasswordController::PasswordController(String _path) {
         File file = SPIFFS.open(_path, "r");
         String result = file.readString();
         ssid = getValue(result, '\n', 0);
+        ssid = ssid.substring(0,ssid.length()-1);
         password = getValue(result, '\n', 1);
+
     } else {
         ssid = "";
         password = "";
     }
 }
 
-PasswordController::writeCredentials(String _ssid, String _password) {
+void PasswordController::writeCredentials(String _ssid, String _password) {
     ssid = _ssid;
     password = _password;
     // Todo: Write File
-    File file = SPIFFS.open(_path, FILE_WRITE);
+    File file = SPIFFS.open(path, FILE_WRITE);
     file.println(ssid);
-    file.println(password);
+    file.print(password);
     file.close();
 }
 
-PasswordController::getSSID() {
+String PasswordController::getSSID() {
     return ssid;
 }
 
-PasswordController::getPassword() {
+String PasswordController::getPassword() {
     return password;
 }
 
-PasswordController::isExisting() {
+bool PasswordController::isExisting() {
     return exists;
 }
