@@ -10,7 +10,7 @@ String processor(const String& var) {
   return String();
 }
 
-Webserver::Webserver(LightController _lightController, AlarmController _alarmController) : server(80) {
+Webserver::Webserver(LightController _lightController, AlarmController *_alarmController) : server(80) {
     lightController = _lightController;
     alarmController = _alarmController;
 }
@@ -88,7 +88,7 @@ void Webserver::setup() {
 
     Serial.println("Alarm on, Bro");
 
-    alarmController.on();
+    alarmController->on();
     request->send(200, "text/plain", "OK");
   });
 
@@ -96,7 +96,7 @@ void Webserver::setup() {
 
     Serial.println("Alarm off, Bro");
 
-    alarmController.off();
+    alarmController->off();
     request->send(200, "text/plain", "OK");
   });
 
@@ -119,7 +119,7 @@ void Webserver::setup() {
       minute = std::atoi(inputMessage.c_str());
     }
 
-    alarmController.setAlarm(hour, minute);
+    alarmController->setAlarm(hour, minute);
 
     Serial.println(inputMessage);
     request->send(200, "text/plain", "OK");

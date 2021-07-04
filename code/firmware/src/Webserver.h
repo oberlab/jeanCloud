@@ -9,14 +9,14 @@
 class Webserver
 {
     public:
-        Webserver(LightController _lightController, AlarmController _alarmController);
+        Webserver(LightController _lightController, AlarmController *_alarmController);
         void setup();
         void begin();
 
     private:
         AsyncWebServer server;
         LightController lightController;
-        AlarmController alarmController;
+        AlarmController *alarmController;
 };
 
 
