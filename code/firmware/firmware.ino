@@ -3,6 +3,7 @@
 #include "./src/LightController.h"
 #include "./src/Webserver.h"
 #include "./src/AlarmController.h"
+#include "./src/PasswordController.h"
 #include <FastLED.h>
 #include <TM1637Display.h>
 #include <WiFi.h>
@@ -32,9 +33,8 @@ AlarmController alarmController = AlarmController();
 void initFS() {
   if (!SPIFFS.begin()) {
     Serial.println("An error has occurred while mounting SPIFFS");
-  }
-  else{
-   Serial.println("SPIFFS mounted successfully");
+  } else {
+    Serial.println("SPIFFS mounted successfully");
   }
 }
 
@@ -47,8 +47,14 @@ void setup() {
 
     initFS();
 
+    PasswordController passwordController = PasswordController("/wifi.txt");
+    if (!passwordController.isExisting()) {
+      Serial.println("No Wifi.txt File");
+      passwordController.writeCredentials(ssid, password);
+    }
+
     // Connect to Wi-Fi
-    WiFi.begin(ssid, password);
+    WiFi.begin(passwordController.getSSID(), passwordController.getPassword());
     while (WiFi.status() != WL_CONNECTED) {
       delay(1000);
       Serial.println("Connecting to WiFi..");
