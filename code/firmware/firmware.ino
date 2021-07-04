@@ -2,6 +2,7 @@
 #include <ESPAsyncWebServer.h>
 #include "./src/LightController.h"
 #include "./src/Webserver.h"
+#include "./src/AlarmController.h"
 #include <FastLED.h>
 #include <TM1637Display.h>
 #include <WiFi.h>
@@ -15,6 +16,7 @@ const char* password = "urlaubingseng20";
 #define CLK 18
 #define DIO 5
 
+
 // Create display object:
 TM1637Display display = TM1637Display(CLK, DIO);
 
@@ -25,6 +27,7 @@ const int   daylightOffset_sec = 7200;
 
 LightController lightController = LightController();
 Webserver webserver = Webserver(lightController);
+AlarmController alarmController = AlarmController();
 
 void initFS() {
   if (!SPIFFS.begin()) {
@@ -87,7 +90,7 @@ void loop() {
     return;
   }
   Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
-  
+
   char timeHour[3];
   strftime(timeHour,3, "%H", &timeinfo);
   char timeMinute[3];
@@ -95,6 +98,8 @@ void loop() {
   int displayTime = atoi(timeHour)*100 + atoi(timeMinute);
   Serial.println(displayTime);
   display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
-  delay(1000);
+  alarmController.makeNoise(alarmController.checkAlarm(atoi(timeHour), atoi(timeMinute), alarmController.getAlarmStatus()));
+
+  delay(500);
 
 }
