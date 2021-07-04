@@ -27,8 +27,8 @@ const long  gmtOffset_sec = 0;
 const int   daylightOffset_sec = 7200;
 
 LightController lightController = LightController();
-Webserver webserver = Webserver(lightController);
 AlarmController alarmController = AlarmController();
+Webserver webserver = Webserver(lightController, alarmController);
 
 void initFS() {
   if (!SPIFFS.begin()) {

@@ -36,7 +36,6 @@ PasswordController::PasswordController(String _path) {
 void PasswordController::writeCredentials(String _ssid, String _password) {
     ssid = _ssid;
     password = _password;
-    // Todo: Write File
     File file = SPIFFS.open(path, FILE_WRITE);
     file.println(ssid);
     file.print(password);

@@ -49,6 +49,25 @@
                 <p class="state">Intensit&auml;t: <span id="sliderValue3"></span></p>
             </div>
         </div>
+        <br />
+        <div class="card-grid">
+            <div class="card">
+                <p class="card-title">Wecker</p>
+                <label class="oberlab-switch">
+                    <input type="checkbox" onchange="toogleAlarm(this)" checked>
+                    <span class="oberlab-slider round"></span>
+                </label>
+            </div>
+            <div class="card">
+                <p class="card-title">Weckzeit</p>
+                <p class="switch">
+                    <input type="number" id="wakeup-hour" min="0" max="23" step="1" value ="0">
+                    <input type="number" id="wakeup-minute" min="0" max="59" step="1" value ="0">
+                    <br />
+                    <button onclick="setAlarm()">Speichern</button>
+                </p>
+            </div>
+        </div>
     </div>
 </body>
 </html>

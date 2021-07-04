@@ -10,8 +10,9 @@ String processor(const String& var) {
   return String();
 }
 
-Webserver::Webserver(LightController _lightController) : server(80) {
+Webserver::Webserver(LightController _lightController, AlarmController _alarmController) : server(80) {
     lightController = _lightController;
+    alarmController = _alarmController;
 }
 
 void Webserver::setup() {
@@ -78,6 +79,47 @@ void Webserver::setup() {
 
     lightController.setRGB(red, green, blue);
     lightController.on();
+
+    Serial.println(inputMessage);
+    request->send(200, "text/plain", "OK");
+  });
+
+  server.on("/alarm/on", HTTP_GET, [&] (AsyncWebServerRequest *request) {
+
+    Serial.println("Alarm on, Bro");
+
+    alarmController.on();
+    request->send(200, "text/plain", "OK");
+  });
+
+  server.on("/alarm/off", HTTP_GET, [&] (AsyncWebServerRequest *request) {
+
+    Serial.println("Alarm off, Bro");
+
+    alarmController.off();
+    request->send(200, "text/plain", "OK");
+  });
+
+  server.on("/alarm/set", HTTP_GET, [&] (AsyncWebServerRequest *request) {
+    const char* PARAM_INPUT_HOUR = "hour";
+    const char* PARAM_INPUT_MINUTE = "minute";
+
+    int hour = 0;
+    int minute = 0;
+
+    String inputMessage = "No message sent";
+
+    if (request->hasParam(PARAM_INPUT_HOUR)) {
+      inputMessage = request->getParam(PARAM_INPUT_HOUR)->value();
+      hour = std::atoi(inputMessage.c_str());
+    }
+
+    if (request->hasParam(PARAM_INPUT_MINUTE)) {
+      inputMessage = request->getParam(PARAM_INPUT_MINUTE)->value();
+      minute = std::atoi(inputMessage.c_str());
+    }
+
+    alarmController.setAlarm(hour, minute);
 
     Serial.println(inputMessage);
     request->send(200, "text/plain", "OK");
