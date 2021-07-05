@@ -115,6 +115,12 @@ input[type=number] {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+input[type=text], input[type=password] {
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 5px;
+}
+
 button {
   border: none;
   color: white;

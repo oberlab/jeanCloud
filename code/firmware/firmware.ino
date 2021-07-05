@@ -9,6 +9,7 @@
 #include <WiFi.h>
 #include "SPIFFS.h"
 
+const String name = "Konsti";
 
 const String ssid = "ALK_mobil";
 const String password = "urlaubingseng20";
@@ -30,12 +31,26 @@ LightController lightController = LightController();
 AlarmController alarmController = AlarmController();
 Webserver webserver = Webserver(lightController, &alarmController);
 
+bool isSetup = false;
+
 void initFS() {
   if (!SPIFFS.begin()) {
     Serial.println("An error has occurred while mounting SPIFFS");
   } else {
     Serial.println("SPIFFS mounted successfully");
   }
+}
+
+bool connectToWifi() {
+    int connectionTries = 0;
+    WiFi.begin(passwordController.getSSID().c_str(), passwordController.getPassword().c_str());
+    while (WiFi.status() != WL_CONNECTED && connectionTries <= 5) {
+      delay(1000);
+      Serial.println("Connecting to WiFi.. Try: " + connectionTries);
+      connectionTries++;
+    }
+
+    return WiFi.status() == WL_CONNECTED;
 }
 
 void setup() {
@@ -48,18 +63,30 @@ void setup() {
     initFS();
 
     PasswordController passwordController = PasswordController("/wifi.txt");
+    Webserver apWebserver = Webserver(lightController, &alarmController);
     if (!passwordController.isExisting()) {
-      Serial.println("No Wifi.txt File");
-      passwordController.writeCredentials(ssid, password);
+      isSetup = true;
+    } else {
+      isSetup = !connectToWifi();
     }
 
+    if (isSetup) {
+      WiFi.disconnect();
+      apWebserver.setupAP(&passwordController);
+      WiFi.softAP(name + "'s JeanCloud");
+      apWebserver.start();
+    }
     // Connect to Wi-Fi
-    WiFi.begin(passwordController.getSSID().c_str(), passwordController.getPassword().c_str());
-    while (WiFi.status() != WL_CONNECTED) {
-      delay(1000);
-      Serial.println("Connecting to WiFi..");
+    while (isSetup) {
+      isSetup = !connectToWifi();
+      if (isSetup) {
+        WiFi.disconnect();
+      } else {
+        WiFi.softAPdisconnect();
+        apWebserver.end();
+      }
     }
-
+    
     // Print ESP Local IP Address
     Serial.println(WiFi.localIP());
 
@@ -88,6 +115,10 @@ void setup() {
 }
 
 void loop() {
+
+  // Don't Execute anything if it is setting up
+  if (isSetup) { return; }
+
   // put your main code here, to run repeatedly:
   struct tm timeinfo;
   if(!getLocalTime(&timeinfo)){
@@ -107,5 +138,4 @@ void loop() {
   alarmController.makeNoise(alarmController.checkAlarm(atoi(timeHour), atoi(timeMinute), alarmController.getAlarmStatus()));
 
   delay(500);
-
 }

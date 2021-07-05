@@ -3,6 +3,7 @@
 
 #include "LightController.h"
 #include "AlarmController.h"
+#include "PasswordController.h"
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 
@@ -11,7 +12,9 @@ class Webserver
     public:
         Webserver(LightController _lightController, AlarmController *_alarmController);
         void setup();
+        void setupAP(PasswordController *_passwordController);
         void begin();
+        void end();
 
     private:
         AsyncWebServer server;

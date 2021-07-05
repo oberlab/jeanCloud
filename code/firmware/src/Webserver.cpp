@@ -15,6 +15,39 @@ Webserver::Webserver(LightController _lightController, AlarmController *_alarmCo
     alarmController = _alarmController;
 }
 
+void Webserver::setupAP(PasswordController *_passwordController) {
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/indexAP.html", "text/html");
+  });
+
+  server.serveStatic("/", SPIFFS, "/");
+
+  server.on("/wifi", HTTP_GET, [&] (AsyncWebServerRequest *request) {
+    const char* PARAM_INPUT_SSID = "ssid";
+    const char* PARAM_INPUT_PASSWORD = "password";
+
+    String ssid = "";
+    String password = "";
+
+    String inputMessage = "No message sent";
+
+    if (request->hasParam(PARAM_INPUT_SSID)) {
+      inputMessage = request->getParam(PARAM_INPUT_SSID)->value();
+      ssid = inputMessage;
+    }
+
+    if (request->hasParam(PARAM_INPUT_PASSWORD)) {
+      inputMessage = request->getParam(PARAM_INPUT_PASSWORD)->value();
+      password = inputMessage;
+    }
+
+    _passwordController->writeCredentials(ssid, password);
+
+    Serial.println(inputMessage);
+    request->send(200, "text/plain", "OK");
+  });
+}
+
 void Webserver::setup() {
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/index.html", "text/html");
@@ -127,3 +160,4 @@ void Webserver::setup() {
 }
 
 void Webserver::begin() { server.begin(); }
+void Webserver::end() { server.end(); }
