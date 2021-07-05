@@ -43,7 +43,7 @@ void initFS() {
 
 bool connectToWifi(PasswordController *passwordController) {
     int connectionTries = 0;
-    WiFi.begin(passwordController.getSSID().c_str(), passwordController.getPassword().c_str());
+    WiFi.begin(passwordController->getSSID().c_str(), passwordController->getPassword().c_str());
     while (WiFi.status() != WL_CONNECTED && connectionTries <= 5) {
       delay(1000);
       Serial.println("Connecting to WiFi.. Try: " + connectionTries);
@@ -86,7 +86,7 @@ void setup() {
         apWebserver.end();
       }
     }
-    
+
     // Print ESP Local IP Address
     Serial.println(WiFi.localIP());
 
