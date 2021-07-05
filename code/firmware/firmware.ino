@@ -41,7 +41,7 @@ void initFS() {
   }
 }
 
-bool connectToWifi() {
+bool connectToWifi(PasswordController *passwordController) {
     int connectionTries = 0;
     WiFi.begin(passwordController.getSSID().c_str(), passwordController.getPassword().c_str());
     while (WiFi.status() != WL_CONNECTED && connectionTries <= 5) {
@@ -67,7 +67,7 @@ void setup() {
     if (!passwordController.isExisting()) {
       isSetup = true;
     } else {
-      isSetup = !connectToWifi();
+      isSetup = !connectToWifi(&passwordController);
     }
 
     if (isSetup) {
@@ -78,7 +78,7 @@ void setup() {
     }
     // Connect to Wi-Fi
     while (isSetup) {
-      isSetup = !connectToWifi();
+      isSetup = !connectToWifi(&passwordController);
       if (isSetup) {
         WiFi.disconnect();
       } else {
