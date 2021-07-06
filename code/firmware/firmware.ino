@@ -76,19 +76,11 @@ void setup() {
       WiFi.softAP(name + "'s JeanCloud");
       apWebserver.start();
     }
-    // Connect to Wi-Fi
-    while (isSetup) {
-      isSetup = !connectToWifi(&passwordController);
-      if (isSetup) {
-        WiFi.disconnect();
-      } else {
-        WiFi.softAPdisconnect();
-        apWebserver.end();
-      }
-    }
 
     // Print ESP Local IP Address
     Serial.println(WiFi.localIP());
+
+    if (isSetup) { return; }
 
     // Init and get the time
     configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);

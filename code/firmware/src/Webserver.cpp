@@ -43,6 +43,7 @@ void Webserver::setupAP(PasswordController *_passwordController) {
 
     _passwordController->writeCredentials(ssid, password);
 
+    ESP.restart();
     Serial.println(inputMessage);
     request->send(200, "text/plain", "OK");
   });
