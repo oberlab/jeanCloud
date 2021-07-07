@@ -9,7 +9,7 @@
 #include <WiFi.h>
 #include "SPIFFS.h"
 
-const String name = "Konsti";
+char* name = "Konsti's JeanCloud";
 
 const String ssid = "ALK_mobil";
 const String password = "urlaubingseng20";
@@ -73,8 +73,8 @@ void setup() {
     if (isSetup) {
       WiFi.disconnect();
       apWebserver.setupAP(&passwordController);
-      WiFi.softAP(name + "'s JeanCloud");
-      apWebserver.start();
+      WiFi.softAP(name);
+      apWebserver.begin();
     }
 
     // Print ESP Local IP Address
