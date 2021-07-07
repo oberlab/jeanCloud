@@ -10,7 +10,7 @@ String processor(const String& var) {
   return String();
 }
 
-Webserver::Webserver(LightController _lightController, AlarmController *_alarmController) : server(80) {
+Webserver::Webserver(int port, LightController _lightController, AlarmController *_alarmController) : server(port) {
     lightController = _lightController;
     alarmController = _alarmController;
 }
