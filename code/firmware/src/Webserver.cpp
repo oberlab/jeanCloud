@@ -34,20 +34,25 @@ void Webserver::setupAP() {
 
     if (request->hasParam(PARAM_INPUT_SSID)) {
       inputMessage = request->getParam(PARAM_INPUT_SSID)->value();
-      Serial.println(inputMessage);
       ssid = inputMessage;
     }
 
     if (request->hasParam(PARAM_INPUT_PASSWORD)) {
       inputMessage = request->getParam(PARAM_INPUT_PASSWORD)->value();
-      Serial.println(inputMessage);
       password = inputMessage;
     }
 
     PasswordController passwordController = PasswordController("/wifi.txt");
+    
+    Serial.println("--X--");
+    Serial.println(ssid);
+    Serial.println(password);
+    Serial.println("--X--");
+
     passwordController.writeCredentials(ssid, password);
 
     request->send(200, "text/plain", "OK");
+    delay(1000);
     ESP.restart();
   });
   Serial.println("AP Webserver setup complete");

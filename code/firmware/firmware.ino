@@ -46,9 +46,10 @@ void initFS() {
 bool connectToWifi(PasswordController *passwordController) {
     int connectionTries = 0;
     WiFi.begin(passwordController->getSSID().c_str(), passwordController->getPassword().c_str());
-    while (WiFi.status() != WL_CONNECTED && connectionTries <= 5) {
+    while (WiFi.status() != WL_CONNECTED && connectionTries <= 20) {
       delay(1000);
-      Serial.println("Connecting to WiFi.. Try: " + connectionTries);
+      Serial.print("Connecting to WiFi.. Try: " + connectionTries);
+      Serial.println(connectionTries);
       connectionTries++;
     }
 
@@ -80,13 +81,12 @@ void setup() {
       apWebserver.setupAP();
       apWebserver.begin();
       Serial.println(WiFi.softAPIP());
-      
     }
 
     if (isSetup) { return; }
   
     // Print ESP Local IP Address
-    Serial.println(WiFi.softAPIP());
+    Serial.println(WiFi.localIP());
 
     // Init and get the time
     configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
