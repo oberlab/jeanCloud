@@ -13,16 +13,16 @@
             <div class="card">
                 <p class="card-title">Licht</p>
                 <label class="oberlab-switch">
-                    <input type="checkbox" onchange="toogleLight(this)" checked>
+                    <input type="checkbox" onchange="toogleLight(this)" %LIGHT%>
                     <span class="oberlab-slider round"></span>
                 </label>
             </div>
             <div class="card">
                 <p class="card-title">Helligkeit</p>
                 <p class="switch">
-                    <input type="range" onchange="setIntensity(this)" id="intensity-slider" min="0" max="255" step="1" value ="255" class="slider">
+                    <input type="range" onchange="setIntensity(this)" id="intensity-slider" min="0" max="255" step="1" value ="%INTENSITY%" class="slider">
                 </p>
-                <p class="state">Intensit&auml;t: <span id="sliderValue4"></span></p>
+                <p class="state">Intensit&auml;t: <span id="intensity-slider-value">%INTENSITY%</span></p>
             </div>
         </div>
         <br />
@@ -30,23 +30,23 @@
             <div class="card">
                 <p class="card-title">Rot</p>
                 <p class="switch">
-                    <input type="range" onchange="setRGB(this, 'red')" id="red-slider" min="0" max="255" step="1" value ="255" class="slider">
+                    <input type="range" onchange="setRGB(this, 'red')" id="red-slider" min="0" max="255" step="1" value ="%RED%" class="slider">
                 </p>
-                <p class="state">Intensit&auml;t: <span id="sliderValue1"></span></p>
+                <p class="state">Intensit&auml;t: <span id="red-slider-value">%RED%</span></p>
             </div>
             <div class="card">
                 <p class="card-title"> Gr&uuml;n </p>
                 <p class="switch">
-                    <input type="range" onchange="setRGB(this, 'green')" id="green-slider" min="0" max="255" step="1" value ="255" class="slider">
+                    <input type="range" onchange="setRGB(this, 'green')" id="green-slider" min="0" max="255" step="1" value ="%GREEN%" class="slider">
                 </p>
-                <p class="state">Intensit&auml;t: <span id="sliderValue2"></span></p>
+                <p class="state">Intensit&auml;t: <span id="green-slider-value">%GREEN%</span></p>
             </div>
             <div class="card">
                 <p class="card-title">Blau</p>
                 <p class="switch">
-                    <input type="range" onchange="setRGB(this, 'blue')" id="blue-slider" min="0" max="255" step="1" value ="255" class="slider">
+                    <input type="range" onchange="setRGB(this, 'blue')" id="blue-slider" min="0" max="255" step="1" value ="%BLUE%" class="slider">
                 </p>
-                <p class="state">Intensit&auml;t: <span id="sliderValue3"></span></p>
+                <p class="state">Intensit&auml;t: <span id="blue-slider-value">%BLUE%</span></p>
             </div>
         </div>
         <br />
@@ -54,15 +54,15 @@
             <div class="card">
                 <p class="card-title">Wecker</p>
                 <label class="oberlab-switch">
-                    <input type="checkbox" onchange="toogleAlarm(this)" checked>
+                    <input type="checkbox" onchange="toogleAlarm(this)" %ALARM%>
                     <span class="oberlab-slider round"></span>
                 </label>
             </div>
             <div class="card">
                 <p class="card-title">Weckzeit</p>
                 <p class="switch">
-                    <input type="number" id="wakeup-hour" min="0" max="23" step="1" value ="0">
-                    <input type="number" id="wakeup-minute" min="0" max="59" step="1" value ="0">
+                    <input type="number" id="wakeup-hour" min="0" max="23" step="1" value ="%HOUR%">
+                    <input type="number" id="wakeup-minute" min="0" max="59" step="1" value ="%MINUTE%">
                     <br />
                     <button onclick="setAlarm()">Speichern</button>
                 </p>

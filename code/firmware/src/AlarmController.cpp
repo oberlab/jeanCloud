@@ -55,3 +55,7 @@ bool AlarmController::checkAlarm(int hour, int minute, bool status) {
 bool AlarmController::getAlarmStatus(){
     return alarmStatus;
 }
+
+int AlarmController::getHour() { return alarmHour; }
+
+int AlarmController::getMinute() { return alarmMinute; }

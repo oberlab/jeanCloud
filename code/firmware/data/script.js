@@ -7,10 +7,12 @@ async function toogleLight(element) {
 }
 
 async function setIntensity(element) {
+    document.getElementById("intensity-slider-value").innerHTML = element.value;
     await fetch("/lamp/intenstiy?value=" + element.value);
 }
 
 async function setRGB(element, color) {
+    document.getElementById(color + "-slider-value").innerHTML = element.value;
     await fetch("/lamp/color?" + color + "=" + element.value);
 }
 

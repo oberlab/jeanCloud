@@ -11,6 +11,8 @@ class AlarmController
         void makeNoise(bool triggered);
         bool checkAlarm(int hour, int minute, bool status);
         bool getAlarmStatus();
+        int getHour();
+        int getMinute();
 
     private:
         int alarmHour;

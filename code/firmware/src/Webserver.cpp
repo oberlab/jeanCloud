@@ -4,16 +4,38 @@
 #include "PasswordController.h"
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
-#include "SPIFFS.h"
-
-
-String processor(const String& var) {
-  return String();
-}
+#include <SPIFFS.h>
 
 Webserver::Webserver(int port, LightController _lightController, AlarmController *_alarmController) : server(port) {
     lightController = _lightController;
     alarmController = _alarmController;
+    processor = [&](const String& var){
+      if (var == "LIGHT") {
+        if (lightController.isActive()) {
+          return String("checked");
+        }
+        return String();
+      } else if (var == "INTENSITY") {
+        return String(lightController.getIntenstiy());
+      } else if (var == "RED") {
+        return String(lightController.getRed());
+      } else if (var == "GREEN") {
+        return String(lightController.getGreen());
+      } else if (var == "BLUE") {
+        return String(lightController.getBlue());
+      } else if (var == "ALARM") {
+        if (alarmController->getAlarmStatus()) {
+          return String("checked");
+        }
+        return String();
+      } else if (var == "HOUR") {
+        return String(alarmController->getHour());
+      } else if (var == "MINUTE") {
+        return String(alarmController->getMinute());
+      }
+
+      return String();
+    };
 }
 
 void Webserver::setupAP() {
@@ -43,12 +65,6 @@ void Webserver::setupAP() {
     }
 
     PasswordController passwordController = PasswordController("/wifi.txt");
-    
-    Serial.println("--X--");
-    Serial.println(ssid);
-    Serial.println(password);
-    Serial.println("--X--");
-
     passwordController.writeCredentials(ssid, password);
 
     request->send(200, "text/plain", "OK");
@@ -59,8 +75,8 @@ void Webserver::setupAP() {
 }
 
 void Webserver::setup() {
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/index.html", "text/html");
+  server.on("/", HTTP_GET, [&](AsyncWebServerRequest *request) {
+    request->send(SPIFFS, "/index.html", "text/html", false, processor);
   });
 
   server.serveStatic("/", SPIFFS, "/");

@@ -39,12 +39,14 @@ void LightController::setIntenstiy(int _intensity) {
   intensity = _intensity;
 }
 
-void LightController::setPattern() {
+void LightController::setPattern() {}
 
-}
+int LightController::getIntenstiy() { return intensity; }
 
 int LightController::getRed() { return red; }
 
 int LightController::getGreen() { return green; }
 
 int LightController::getBlue() { return blue; }
+
+bool LightController::isActive() { return FastLED.getBrightness() > 0; }

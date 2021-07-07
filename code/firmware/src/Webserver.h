@@ -7,6 +7,8 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 
+typedef std::function<String(const String&)> AwsTemplateProcessor;
+
 class Webserver
 {
     public:
@@ -20,6 +22,7 @@ class Webserver
         AsyncWebServer server;
         LightController lightController;
         AlarmController *alarmController;
+        AwsTemplateProcessor processor;
 };
 
 
