@@ -9,7 +9,7 @@
 #include <WiFi.h>
 #include "SPIFFS.h"
 
-char* name = "Konsti";
+char* name = "Konsti's JeanCloud";
 char* passwort = "passwort123";
 
 const String ssid = "ALK_mobil";
@@ -73,12 +73,11 @@ void setup() {
     }
 
     if (isSetup) {
-      // WiFi.disconnect();
+      WiFi.disconnect();
       WiFi.mode(WIFI_AP);
       WiFi.softAP(name, passwort);
-      Serial.println(WiFi.softAPIP());
-      
-      apWebserver.setupAP(&passwordController);
+
+      apWebserver.setupAP();
       apWebserver.begin();
       Serial.println(WiFi.softAPIP());
       

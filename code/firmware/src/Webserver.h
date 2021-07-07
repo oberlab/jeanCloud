@@ -12,7 +12,7 @@ class Webserver
     public:
         Webserver(int port, LightController _lightController, AlarmController *_alarmController);
         void setup();
-        void setupAP(PasswordController *_passwordController);
+        void setupAP();
         void begin();
         void end();
 

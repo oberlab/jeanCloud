@@ -1,6 +1,7 @@
 #include "Arduino.h"
 #include "Webserver.h"
 #include "LightController.h"
+#include "PasswordController.h"
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include "SPIFFS.h"
@@ -15,7 +16,7 @@ Webserver::Webserver(int port, LightController _lightController, AlarmController
     alarmController = _alarmController;
 }
 
-void Webserver::setupAP(PasswordController *_passwordController) {
+void Webserver::setupAP() {
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/indexAP.html", "text/html");
   });
@@ -43,7 +44,8 @@ void Webserver::setupAP(PasswordController *_passwordController) {
       password = inputMessage;
     }
 
-    _passwordController->writeCredentials(ssid, password);
+    PasswordController passwordController = PasswordController("/wifi.txt");
+    passwordController.writeCredentials(ssid, password);
 
     request->send(200, "text/plain", "OK");
     ESP.restart();
