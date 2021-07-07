@@ -9,7 +9,8 @@
 #include <WiFi.h>
 #include "SPIFFS.h"
 
-char* name = "Konsti's JeanCloud";
+char* name = "Konsti";
+char* passwort = "passwort123";
 
 const String ssid = "ALK_mobil";
 const String password = "urlaubingseng20";
@@ -83,7 +84,7 @@ void setup() {
     if (isSetup) { return; }
   
     // Print ESP Local IP Address
-    Serial.println(WiFi.localIP());
+    Serial.println(WiFi.softAPIP());
 
     // Init and get the time
     configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
