@@ -75,12 +75,13 @@ void setup() {
       apWebserver.setupAP(&passwordController);
       WiFi.softAP(name);
       apWebserver.begin();
+      Serial.println(WiFi.softAPIP());
     }
 
+    if (isSetup) { return; }
+  
     // Print ESP Local IP Address
     Serial.println(WiFi.localIP());
-
-    if (isSetup) { return; }
 
     // Init and get the time
     configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
