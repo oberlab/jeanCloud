@@ -31,6 +31,7 @@ const int   daylightOffset_sec = 7200;
 LightController lightController = LightController();
 AlarmController alarmController = AlarmController();
 Webserver webserver = Webserver(80, lightController, &alarmController);
+Webserver apWebserver = Webserver(80, lightController, &alarmController);
 
 bool isSetup = false;
 
@@ -68,17 +69,19 @@ void setup() {
     if (!passwordController.isExisting()) {
       isSetup = true;
     } else {
-      // isSetup = !connectToWifi(&passwordController);
+      isSetup = !connectToWifi(&passwordController);
     }
 
     if (isSetup) {
       // WiFi.disconnect();
       WiFi.mode(WIFI_AP);
-      WiFi.softAP(name);
-      Webserver apWebserver = Webserver(8080, lightController, &alarmController);
+      WiFi.softAP(name, passwort);
+      Serial.println(WiFi.softAPIP());
+      
       apWebserver.setupAP(&passwordController);
       apWebserver.begin();
       Serial.println(WiFi.softAPIP());
+      
     }
 
     if (isSetup) { return; }
