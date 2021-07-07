@@ -68,11 +68,11 @@ void setup() {
     if (!passwordController.isExisting()) {
       isSetup = true;
     } else {
-      isSetup = !connectToWifi(&passwordController);
+      // isSetup = !connectToWifi(&passwordController);
     }
 
     if (isSetup) {
-      WiFi.disconnect();
+      // WiFi.disconnect();
       WiFi.mode(WIFI_AP);
       WiFi.softAP(name);
       Webserver apWebserver = Webserver(8080, lightController, &alarmController);
