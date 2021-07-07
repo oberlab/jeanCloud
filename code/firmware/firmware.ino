@@ -72,6 +72,7 @@ void setup() {
 
     if (isSetup) {
       WiFi.disconnect();
+      WiFi.mode(WIFI_AP);
       apWebserver.setupAP(&passwordController);
       WiFi.softAP(name);
       apWebserver.begin();
