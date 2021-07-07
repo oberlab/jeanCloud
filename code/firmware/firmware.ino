@@ -63,7 +63,7 @@ void setup() {
     initFS();
 
     PasswordController passwordController = PasswordController("/wifi.txt");
-    Webserver apWebserver = Webserver(lightController, &alarmController);
+    
     if (!passwordController.isExisting()) {
       isSetup = true;
     } else {
@@ -73,8 +73,9 @@ void setup() {
     if (isSetup) {
       WiFi.disconnect();
       WiFi.mode(WIFI_AP);
-      apWebserver.setupAP(&passwordController);
       WiFi.softAP(name);
+      Webserver apWebserver = Webserver(lightController, &alarmController);
+      apWebserver.setupAP(&passwordController);
       apWebserver.begin();
       Serial.println(WiFi.softAPIP());
     }
