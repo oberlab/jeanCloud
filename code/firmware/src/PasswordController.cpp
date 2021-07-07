@@ -34,12 +34,18 @@ PasswordController::PasswordController(String _path) {
 }
 
 void PasswordController::writeCredentials(String _ssid, String _password) {
-    ssid = _ssid;
-    password = _password;
+    Serial.println(SPIFFS.exists(path));
+
     File file = SPIFFS.open(path, FILE_WRITE);
+    if (!file) {
+        Serial.println("There was an error opening the file for writing");
+        return;
+    }
     file.println(ssid);
     file.print(password);
     file.close();
+    ssid = _ssid;
+    password = _password;
 }
 
 String PasswordController::getSSID() {
