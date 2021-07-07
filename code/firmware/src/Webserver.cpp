@@ -47,6 +47,7 @@ void Webserver::setupAP(PasswordController *_passwordController) {
     Serial.println(inputMessage);
     request->send(200, "text/plain", "OK");
   });
+  Serial.println("AP Webserver setup complete");
 }
 
 void Webserver::setup() {
