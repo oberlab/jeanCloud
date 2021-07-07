@@ -29,7 +29,7 @@ const int   daylightOffset_sec = 7200;
 
 LightController lightController = LightController();
 AlarmController alarmController = AlarmController();
-Webserver webserver = Webserver(lightController, &alarmController);
+Webserver webserver = Webserver(80, lightController, &alarmController);
 
 bool isSetup = false;
 
@@ -74,7 +74,7 @@ void setup() {
       WiFi.disconnect();
       WiFi.mode(WIFI_AP);
       WiFi.softAP(name);
-      Webserver apWebserver = Webserver(lightController, &alarmController);
+      Webserver apWebserver = Webserver(8080, lightController, &alarmController);
       apWebserver.setupAP(&passwordController);
       apWebserver.begin();
       Serial.println(WiFi.softAPIP());
