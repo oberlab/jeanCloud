@@ -9,11 +9,8 @@
 #include <WiFi.h>
 #include "SPIFFS.h"
 
-char* name = "Konsti's JeanCloud";
+char* name = "Alex's JeanCloud";
 char* passwort = "passwort123";
-
-const String ssid = "ALK_mobil";
-const String password = "urlaubingseng20";
 
 // Define the connections pins for display:
 #define CLK 18
