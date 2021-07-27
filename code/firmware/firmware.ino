@@ -93,6 +93,7 @@ void setup() {
     }
     Serial.println("mDNS responder started");
   
+    MDNS.setInstanceName(name);
     MDNS.addService("http", "tcp", 80);
     // Print ESP Local IP Address
     Serial.println(WiFi.localIP());
