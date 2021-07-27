@@ -85,7 +85,7 @@ void setup() {
 
     if (isSetup) { return; }
 
-    if (!MDNS.begin("jeanCloud")) {
+    if (!MDNS.begin("jeancloud")) {
         Serial.println("Error setting up MDNS responder!");
         while(1) {
             delay(1000);
