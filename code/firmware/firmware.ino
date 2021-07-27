@@ -1,5 +1,6 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
+#include <ESPmDNS.h>
 #include "./src/LightController.h"
 #include "./src/Webserver.h"
 #include "./src/AlarmController.h"
@@ -83,7 +84,16 @@ void setup() {
     }
 
     if (isSetup) { return; }
+
+    if (!MDNS.begin("jeanCloud")) {
+        Serial.println("Error setting up MDNS responder!");
+        while(1) {
+            delay(1000);
+        }
+    }
+    Serial.println("mDNS responder started");
   
+    MDNS.addService("http", "tcp", 80);
     // Print ESP Local IP Address
     Serial.println(WiFi.localIP());
 
