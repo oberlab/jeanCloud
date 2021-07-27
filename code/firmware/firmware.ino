@@ -85,7 +85,7 @@ void setup() {
 
     if (isSetup) { return; }
 
-    if (!MDNS.begin("jeanCloud")) {
+    if (!MDNS.begin("jeancloud")) {
         Serial.println("Error setting up MDNS responder!");
         while(1) {
             delay(1000);
@@ -93,6 +93,7 @@ void setup() {
     }
     Serial.println("mDNS responder started");
   
+    MDNS.setInstanceName(name);
     MDNS.addService("http", "tcp", 80);
     // Print ESP Local IP Address
     Serial.println(WiFi.localIP());
