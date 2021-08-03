@@ -1,16 +1,18 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <ESPmDNS.h>
-#include "./src/LightController.h"
+#include "./src/hardware/LightController.h"
 #include "./src/Webserver.h"
 #include "./src/AlarmController.h"
 #include "./src/PasswordController.h"
+#include "./src/network/MDNSController.h"
 #include <FastLED.h>
 #include <TM1637Display.h>
 #include <WiFi.h>
 #include "SPIFFS.h"
 
 char* name = "Alex's JeanCloud";
+char* hostname = "jeancloud";
 char* passwort = "passwort123";
 
 // Define the connections pins for display:
@@ -26,6 +28,7 @@ const char* ntpServer = "pool.ntp.org";
 const long  gmtOffset_sec = 0;
 const int   daylightOffset_sec = 7200;
 
+MDNSController mdnsController = MDNSController(hostname, name);
 LightController lightController = LightController();
 AlarmController alarmController = AlarmController();
 Webserver webserver = Webserver(80, lightController, &alarmController);
@@ -78,6 +81,8 @@ void setup() {
       WiFi.mode(WIFI_AP);
       WiFi.softAP(name, passwort);
 
+      mdnsController.setup();
+
       apWebserver.setupAP();
       apWebserver.begin();
       Serial.println(WiFi.softAPIP());
@@ -85,16 +90,9 @@ void setup() {
 
     if (isSetup) { return; }
 
-    if (!MDNS.begin("jeancloud")) {
-        Serial.println("Error setting up MDNS responder!");
-        while(1) {
-            delay(1000);
-        }
-    }
-    Serial.println("mDNS responder started");
-  
-    MDNS.setInstanceName(name);
-    MDNS.addService("http", "tcp", 80);
+    // Setup jeancloud.local domain for local network
+    mdnsController.setup();
+
     // Print ESP Local IP Address
     Serial.println(WiFi.localIP());
 

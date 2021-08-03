@@ -1,7 +1,7 @@
 #ifndef Webserver_h
 #define Webserver_h
 
-#include "LightController.h"
+#include "./hardware/LightController.h"
 #include "AlarmController.h"
 #include "PasswordController.h"
 #include <AsyncTCP.h>

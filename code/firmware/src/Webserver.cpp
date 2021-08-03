@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "Webserver.h"
-#include "LightController.h"
+#include "./hardware/LightController.h"
 #include "PasswordController.h"
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
