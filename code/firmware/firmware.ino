@@ -19,7 +19,6 @@ char* passwort = "passwort123";
 #define CLK 18
 #define DIO 5
 
-
 // Create display object:
 TM1637Display display = TM1637Display(CLK, DIO);
 
@@ -57,6 +56,18 @@ bool connectToWifi(PasswordController *passwordController) {
     }
 
     return WiFi.status() == WL_CONNECTED;
+}
+
+struct Button {
+  uint32_t numberKeyPresses;
+  bool pressed;
+};
+
+Button button1 = {0, false};
+
+void IRAM_ATTR button1IRS() {
+  button1.numberKeyPresses += 1;
+  button1.pressed = true;
 }
 
 void setup() {
@@ -116,6 +127,9 @@ void setup() {
     Serial.println(displayTime);
     display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
 
+    pinMode(33, INPUT_PULLUP);
+    attachInterrupt(33, button1IRS, FALLING);
+
     webserver.setup();
     webserver.begin();
 }
@@ -124,6 +138,12 @@ void loop() {
 
   // Don't Execute anything if it is setting up
   if (isSetup) { return; }
+
+  if (button1.pressed) {
+      Serial.printf("Button 1 has been pressed %u times\n", button1.numberKeyPresses);
+
+      button1.pressed = false;
+  }
 
   // put your main code here, to run repeatedly:
   struct tm timeinfo;
@@ -143,5 +163,5 @@ void loop() {
   display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
   alarmController.makeNoise(alarmController.checkAlarm(atoi(timeHour), atoi(timeMinute), alarmController.getAlarmStatus()));
 
-  delay(500);
+  delay(100);
 }
