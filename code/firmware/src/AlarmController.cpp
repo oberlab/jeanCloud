@@ -36,7 +36,7 @@ void AlarmController::makeNoise(bool triggered) {
       ledcWriteTone(channel, 4000);
       delay(100);
       ledcWriteTone(channel, 0);
-      delay(100);
+      delay(500);
       ledcWriteTone(channel, 4000);
       delay(100);
       ledcWriteTone(channel, 0);
