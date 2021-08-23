@@ -11,6 +11,7 @@ class LightController
         void setRGB(int _red, int _green, int _blue);
         void setIntenstiy(int _intensity);
         void setPattern();
+        void fadeBlue();
         int getIntenstiy();
         int getRed();
         int getGreen();

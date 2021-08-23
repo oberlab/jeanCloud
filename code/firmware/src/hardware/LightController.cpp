@@ -39,6 +39,10 @@ void LightController::setIntenstiy(int _intensity) {
   intensity = _intensity;
 }
 
+void LightController::fadeBlue() {
+  FadeInOut(0x00, 0x00, 0xff);
+}
+
 void LightController::setPattern() {}
 
 int LightController::getIntenstiy() { return intensity; }
