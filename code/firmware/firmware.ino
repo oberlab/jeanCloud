@@ -6,6 +6,7 @@
 #include "./src/AlarmController.h"
 #include "./src/PasswordController.h"
 #include "./src/network/MDNSController.h"
+#include "./src/animations/Loading.cpp"
 #include <FastLED.h>
 #include <TM1637Display.h>
 #include <WiFi.h>
@@ -138,6 +139,8 @@ void loop() {
 
   // Don't Execute anything if it is setting up
   if (isSetup) { return; }
+
+  Loading loading = Loading();
 
   if (button1.pressed) {
       Serial.printf("Button 1 has been pressed %u times\n", button1.numberKeyPresses);
