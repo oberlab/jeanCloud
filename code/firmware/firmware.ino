@@ -81,7 +81,7 @@ void setup() {
     initFS();
 
     PasswordController passwordController = PasswordController("/wifi.txt");
-    
+
     if (!passwordController.isExisting()) {
       isSetup = true;
     } else {
@@ -166,5 +166,6 @@ void loop() {
   display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
   alarmController.makeNoise(alarmController.checkAlarm(atoi(timeHour), atoi(timeMinute), alarmController.getAlarmStatus()));
 
+  loading.animate();
   delay(100);
 }
