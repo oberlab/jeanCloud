@@ -40,7 +40,21 @@ void LightController::setIntenstiy(int _intensity) {
 }
 
 void LightController::fadeBlue() {
-  FadeInOut(0x00, 0x00, 0xff);
+  static uint8_t color;
+  EVERY_N_MILLISECONDS(180) {
+    fadeToBlackBy( leds, NUM_LEDS, 230);
+    static uint8_t i = 0;
+    leds[i] = CHSV( color+random8(0,10), 160, 255 );
+    i++;
+    if (i == NUM_LEDS) { i = 0; }  //reset
+
+    //copy ledsA data to leds
+    for (uint8_t i=0; i<NUM_LEDS; i++) { leds[i] = leds[i]; }
+  }
+
+  EVERY_N_SECONDS(2) {
+    color = random8();
+  }
 }
 
 void LightController::setPattern() {}
