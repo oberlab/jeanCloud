@@ -1,5 +1,6 @@
 #ifndef System_h
 #define System_h
+#include "../PasswordController.h"
 
 class System
 {
