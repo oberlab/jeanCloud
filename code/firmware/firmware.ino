@@ -165,7 +165,5 @@ void loop() {
   Serial.println(displayTime);
   display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
   alarmController.makeNoise(alarmController.checkAlarm(atoi(timeHour), atoi(timeMinute), alarmController.getAlarmStatus()));
-
-  lightController.fadeBlue();
   delay(100);
 }
