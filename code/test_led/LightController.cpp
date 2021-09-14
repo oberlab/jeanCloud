@@ -65,7 +65,7 @@ void LightController::bounce() {
 }
 
 void LightController::runner() {
-  EVERY_N_MILLIS(100){
+  EVERY_N_MILLIS(50){
     Serial.print(x);
     fill_solid( leds, NUM_LEDS, CRGB(0, 0, 0));
     leds[x] = CRGB(255, 255, 255);
