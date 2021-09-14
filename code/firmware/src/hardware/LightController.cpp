@@ -9,6 +9,9 @@
 #define COLOR_ORDER GRB
 CRGB leds[NUM_LEDS]; // Define the array of ledsw
 
+int x = 0;
+bool up = true;
+
 LightController::LightController() {
   red = 255;
   blue = 255;
