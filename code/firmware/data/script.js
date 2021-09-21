@@ -32,3 +32,8 @@ async function setAlarm() {
         await fetch("/alarm/set?hour=" + hour + "&minute=" + minute);
     }
 }
+
+async function setDisplayIntensity(element) {
+    document.getElementById("display-slider-value").innerHTML = element.value;
+    await fetch("/display/intenstiy?value=" + element.value);
+}

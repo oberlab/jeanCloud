@@ -6,13 +6,14 @@
 #include "PasswordController.h"
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
+#include <TM1637Display.h>
 
 typedef std::function<String(const String&)> AwsTemplateProcessor;
 
 class Webserver
 {
     public:
-        Webserver(int port, LightController _lightController, AlarmController *_alarmController);
+        Webserver(int port, LightController _lightController, AlarmController *_alarmController, TM1637Display *_display);
         void setup();
         void setupAP();
         void begin();
@@ -22,6 +23,7 @@ class Webserver
         AsyncWebServer server;
         LightController lightController;
         AlarmController *alarmController;
+        TM1637Display *display;
         AwsTemplateProcessor processor;
 };
 

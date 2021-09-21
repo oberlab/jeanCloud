@@ -1,18 +1,19 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <ESPmDNS.h>
-#include "./src/hardware/LightController.h"
-#include "./src/Webserver.h"
-#include "./src/AlarmController.h"
-#include "./src/PasswordController.h"
-#include "./src/network/MDNSController.h"
-#include "./src/animations/Loading.cpp"
 #include <FastLED.h>
+#include <SPIFFS.h>
 #include <TM1637Display.h>
 #include <WiFi.h>
-#include "SPIFFS.h"
+#include "./src/hardware/LightController.h"
+#include "./src/network/MDNSController.h"
+#include "./src/AlarmController.h"
+#include "./src/PasswordController.h"
+#include "./src/hardware/System.h"
+#include "./src/Webserver.h"
+#include "./src/animations/Loading.cpp"
 
-char* name = "Alex's JeanCloud";
+char* name = "Konsti's JeanCloud";
 char* hostname = "jeancloud";
 char* passwort = "passwort123";
 
@@ -31,44 +32,28 @@ const int   daylightOffset_sec = 7200;
 MDNSController mdnsController = MDNSController(hostname, name);
 LightController lightController = LightController();
 AlarmController alarmController = AlarmController();
-Webserver webserver = Webserver(80, lightController, &alarmController);
-Webserver apWebserver = Webserver(80, lightController, &alarmController);
+Webserver webserver = Webserver(80, lightController, &alarmController, &display);
+Webserver apWebserver = Webserver(80, lightController, &alarmController, &display);
 
 bool isSetup = false;
 
-void initFS() {
-  if (!SPIFFS.begin()) {
-    Serial.println("An error has occurred while mounting SPIFFS");
-  } else {
-    Serial.println("SPIFFS mounted successfully");
-  }
-}
-
-bool connectToWifi(PasswordController *passwordController) {
-    int connectionTries = 0;
-    WiFi.begin(passwordController->getSSID().c_str(), passwordController->getPassword().c_str());
-    while (WiFi.status() != WL_CONNECTED && connectionTries <= 20) {
-      delay(1000);
-      Serial.println(passwordController->getSSID().c_str());
-      Serial.println(passwordController->getPassword().c_str());
-      Serial.print("Connecting to WiFi.. Try: " + connectionTries);
-      Serial.println(connectionTries);
-      connectionTries++;
-    }
-
-    return WiFi.status() == WL_CONNECTED;
-}
-
 struct Button {
+  uint8_t pin;
   uint32_t numberKeyPresses;
   bool pressed;
 };
 
-Button button1 = {0, false};
+Button buttonRight = {33, 0, false};
+Button buttonLeft = {35, 0, false};
 
-void IRAM_ATTR button1IRS() {
-  button1.numberKeyPresses += 1;
-  button1.pressed = true;
+void IRAM_ATTR buttonRightIRS() {
+  buttonRight.numberKeyPresses += 1;
+  buttonRight.pressed = true;
+}
+
+void IRAM_ATTR buttonLeftIRS() {
+  buttonLeft.numberKeyPresses += 1;
+  buttonLeft.pressed = true;
 }
 
 void setup() {
@@ -78,14 +63,14 @@ void setup() {
     display.setBrightness(7); // Set the display brightness (0-7)
     display.clear(); // Clear the display
 
-    initFS();
+    System::initFS();
 
     PasswordController passwordController = PasswordController("/wifi.txt");
 
     if (!passwordController.isExisting()) {
       isSetup = true;
     } else {
-      isSetup = !connectToWifi(&passwordController);
+      isSetup = !System::connectToWifi(&passwordController, Loading());
     }
 
     if (isSetup) {
@@ -128,8 +113,10 @@ void setup() {
     Serial.println(displayTime);
     display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
 
-    pinMode(33, INPUT_PULLUP);
-    attachInterrupt(33, button1IRS, FALLING);
+    pinMode(buttonRight.pin, INPUT_PULLUP);
+    pinMode(buttonLeft.pin, INPUT_PULLUP);
+    attachInterrupt(buttonRight.pin, buttonRightIRS, FALLING);
+    attachInterrupt(buttonLeft.pin, buttonLeftIRS, FALLING);
 
     webserver.setup();
     webserver.begin();
@@ -138,14 +125,19 @@ void setup() {
 void loop() {
 
   // Don't Execute anything if it is setting up
-  if (isSetup) { return; }
+  if (isSetup) {
+      lightController.bounce();
+      return;
+  }
 
-  Loading loading = Loading();
+  if (buttonRight.pressed) {
+      Serial.printf("Button Right has been pressed %u times\n", buttonRight.numberKeyPresses);
+      buttonRight.pressed = false;
+  }
 
-  if (button1.pressed) {
-      Serial.printf("Button 1 has been pressed %u times\n", button1.numberKeyPresses);
-
-      button1.pressed = false;
+  if (buttonLeft.pressed) {
+      Serial.printf("Button Left has been pressed %u times\n", buttonLeft.numberKeyPresses);
+      buttonLeft.pressed = false;
   }
 
   // put your main code here, to run repeatedly:

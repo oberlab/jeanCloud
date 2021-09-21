@@ -5,10 +5,12 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <SPIFFS.h>
+#include <TM1637Display.h>
 
-Webserver::Webserver(int port, LightController _lightController, AlarmController *_alarmController) : server(port) {
+Webserver::Webserver(int port, LightController _lightController, AlarmController *_alarmController, TM1637Display *_display) : server(port) {
     lightController = _lightController;
     alarmController = _alarmController;
+    display = _display;
     processor = [&](const String& var){
       if (var == "LIGHT") {
         if (lightController.isActive()) {
@@ -104,6 +106,19 @@ void Webserver::setup() {
       inputMessage = request->getParam(PARAM_INPUT)->value();
       lightController.setIntenstiy(std::atoi(inputMessage.c_str()));
       lightController.on();
+    } else {
+      inputMessage = "No message sent";
+    }
+    Serial.println(inputMessage);
+    request->send(200, "text/plain", "OK");
+  });
+
+  server.on("/display/intenstiy", HTTP_GET, [&] (AsyncWebServerRequest *request) {
+    const char* PARAM_INPUT = "value";
+    String inputMessage;
+    if (request->hasParam(PARAM_INPUT)) {
+      inputMessage = request->getParam(PARAM_INPUT)->value();
+      display->setBrightness(std::atoi(inputMessage.c_str()));
     } else {
       inputMessage = "No message sent";
     }
