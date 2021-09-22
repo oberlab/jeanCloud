@@ -43,5 +43,5 @@ void setup() {
 }
 
 void loop() {
-  lightController.runner();
+  lightController.pulse();
 }

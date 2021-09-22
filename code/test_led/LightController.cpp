@@ -42,18 +42,20 @@ void LightController::setIntenstiy(int _intensity) {
   intensity = _intensity;
 }
 
-void LightController::bounce() {
-  EVERY_N_MILLIS(50){
-    Serial.println(x);
+void LightController::bounce(int length) {
+
+  EVERY_N_MILLIS(100){
     fill_solid( leds, NUM_LEDS, CRGB(0, 0, 0));
-    leds[x] = CRGB(255, 255, 255);
-    leds[x+1] = CRGB(255, 255, 255);
-    leds[x+2] = CRGB(255, 255, 255);
+
+    for (int i = 0; i < length; i++) {
+      leds[x+i] = CRGB(red, green, blue);
+    }
+
     FastLED.show();
 
-    if (x < NUM_LEDS-3 && up) {
+    if (x < NUM_LEDS-length && up) {
       x++;
-    } else if (x == NUM_LEDS-3 && up) {
+    } else if (x == NUM_LEDS-length && up) {
       up = false;
       x--;
     } else if (x == 0 && !up) {
@@ -64,24 +66,43 @@ void LightController::bounce() {
   }
 }
 
-void LightController::runner() {
-  EVERY_N_MILLIS(50){
-    Serial.print(x);
-    fill_solid( leds, NUM_LEDS, CRGB(0, 0, 0));
-    leds[x] = CRGB(255, 255, 255);
-    if (x > 0) {
-      leds[x-1] = CRGB(255, 255, 255);
-      Serial.print(x)-1;
-    } else {
-      leds[NUM_LEDS-2] = CRGB(255, 255, 255);
-    }
+void LightController::pulse() {
 
-    if (x > 1) {
-      leds[x-2] = CRGB(255, 255, 255);
-      Serial.println(x-2);
+  EVERY_N_MILLIS(10){
+
+    FastLED.setBrightness(x);
+
+    if (x < 255 && up) {
+      x++;
+    } else if (x == 255 && up) {
+      up = false;
+      x--;
+    } else if (x == 0 && !up) {
+      up = true;
     } else {
-      leds[NUM_LEDS-1] = CRGB(255, 255, 255);
-      Serial.print(NUM_LEDS-1);
+      x--;
+    }
+    FastLED.show();
+
+  }
+
+}
+
+void LightController::runner() {
+
+  EVERY_N_MILLIS(50){
+
+    fill_solid( leds, NUM_LEDS, CRGB(0, 0, 0));
+    leds[x] = CRGB(red, green, blue);
+    if (x > 0) {
+      leds[x-1] = CRGB(red, green, blue);
+    } else {
+      leds[NUM_LEDS-2] = CRGB(red, green, blue);
+    }
+    if (x > 1) {
+      leds[x-2] = CRGB(red, green, blue);
+    } else {
+      leds[NUM_LEDS-1] = CRGB(red, green, blue);
     }
 
     FastLED.show();
