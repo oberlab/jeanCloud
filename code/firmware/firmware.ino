@@ -154,7 +154,6 @@ void loop() {
   char timeMinute[3];
   strftime(timeMinute,3, "%M", &timeinfo);
   int displayTime = atoi(timeHour)*100 + atoi(timeMinute);
-  Serial.println(displayTime);
   display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
   alarmController.makeNoise(alarmController.checkAlarm(atoi(timeHour), atoi(timeMinute), alarmController.getAlarmStatus()));
   delay(100);
