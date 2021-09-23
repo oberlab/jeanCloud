@@ -43,8 +43,8 @@ struct Button {
   bool pressed;
 };
 
-Button buttonRight = {33, 0, false};
-Button buttonLeft = {35, 0, false};
+Button buttonRight = {12, 0, false};
+Button buttonLeft = {33, 0, false};
 
 void IRAM_ATTR buttonRightIRS() {
   buttonRight.numberKeyPresses += 1;
@@ -66,6 +66,11 @@ void setup() {
     System::initFS();
 
     PasswordController passwordController = PasswordController("/wifi.txt");
+
+    pinMode(buttonRight.pin, INPUT_PULLUP);
+    pinMode(buttonLeft.pin, INPUT_PULLUP);
+    attachInterrupt(buttonRight.pin, buttonRightIRS, FALLING);
+    attachInterrupt(buttonLeft.pin, buttonLeftIRS, FALLING);
 
     if (!passwordController.isExisting()) {
       isSetup = true;
@@ -112,11 +117,6 @@ void setup() {
     int displayTime = atoi(timeHour)*100 + atoi(timeMinute);
     Serial.println(displayTime);
     display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
-
-    pinMode(buttonRight.pin, INPUT_PULLUP);
-    pinMode(buttonLeft.pin, INPUT_PULLUP);
-    attachInterrupt(buttonRight.pin, buttonRightIRS, FALLING);
-    attachInterrupt(buttonLeft.pin, buttonLeftIRS, FALLING);
 
     webserver.setup();
     webserver.begin();
