@@ -13,9 +13,9 @@
 #include "./src/Webserver.h"
 #include "./src/animations/Loading.cpp"
 
-char* name = "Konsti's JeanCloud";
-char* hostname = "jeancloud";
-char* passwort = "passwort123";
+char *name = "Konsti's JeanCloud";
+char *hostname = "jeancloud";
+char *passwort = "passwort123";
 
 // Define the connections pins for display:
 #define CLK 18
@@ -25,9 +25,9 @@ char* passwort = "passwort123";
 TM1637Display display = TM1637Display(CLK, DIO);
 
 // time settings
-const char* ntpServer = "pool.ntp.org";
-const long  gmtOffset_sec = 0;
-const int   daylightOffset_sec = 7200;
+const char *ntpServer = "pool.ntp.org";
+const long gmtOffset_sec = 0;
+const int daylightOffset_sec = 7200;
 
 MDNSController mdnsController = MDNSController(hostname, name);
 LightController lightController = LightController();
@@ -37,7 +37,8 @@ Webserver apWebserver = Webserver(80, lightController, &alarmController, &displa
 
 bool isSetup = false;
 
-struct Button {
+struct Button
+{
   uint8_t pin;
   uint32_t numberKeyPresses;
   bool pressed;
@@ -46,110 +47,131 @@ struct Button {
 Button buttonRight = {12, 0, false};
 Button buttonLeft = {33, 0, false};
 
-void IRAM_ATTR buttonRightIRS() {
+void IRAM_ATTR buttonRightIRS()
+{
   buttonRight.numberKeyPresses += 1;
   buttonRight.pressed = true;
 }
 
-void IRAM_ATTR buttonLeftIRS() {
+void IRAM_ATTR buttonLeftIRS()
+{
   buttonLeft.numberKeyPresses += 1;
   buttonLeft.pressed = true;
 }
 
-void setup() {
-    Serial.begin(115200);
+void setup()
+{
+  Serial.begin(115200);
 
-     // setup display
-    display.setBrightness(7); // Set the display brightness (0-7)
-    display.clear(); // Clear the display
+  // setup display
+  display.setBrightness(7); // Set the display brightness (0-7)
+  display.clear();          // Clear the display
 
-    System::initFS();
+  System::initFS();
 
-    PasswordController passwordController = PasswordController("/wifi.txt");
+  PasswordController passwordController = PasswordController("/wifi.txt");
 
-    pinMode(buttonRight.pin, INPUT_PULLUP);
-    pinMode(buttonLeft.pin, INPUT_PULLUP);
-    attachInterrupt(buttonRight.pin, buttonRightIRS, FALLING);
-    attachInterrupt(buttonLeft.pin, buttonLeftIRS, FALLING);
+  pinMode(buttonRight.pin, INPUT_PULLUP);
+  pinMode(buttonLeft.pin, INPUT_PULLUP);
+  attachInterrupt(buttonRight.pin, buttonRightIRS, FALLING);
+  attachInterrupt(buttonLeft.pin, buttonLeftIRS, FALLING);
 
-    if (!passwordController.isExisting()) {
-      isSetup = true;
-    } else {
-      isSetup = !System::connectToWifi(&passwordController, Loading());
-    }
-
-    if (isSetup) {
-      WiFi.disconnect();
-      WiFi.mode(WIFI_AP);
-      WiFi.softAP(name, passwort);
-
-      mdnsController.setup();
-
-      apWebserver.setupAP();
-      apWebserver.begin();
-      Serial.println(WiFi.softAPIP());
-    }
-
-    if (isSetup) { return; }
-
-    // Setup jeancloud.local domain for local network
-    mdnsController.setup();
-
-    // Print ESP Local IP Address
-    Serial.println(WiFi.localIP());
-
-    // Init and get the time
-    configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
-
-    struct tm timeinfo;
-
-    if(!getLocalTime(&timeinfo)){
-      Serial.println("Failed to obtain time");
-      display.showNumberDec(0);
-      return;
-    }
-
-    char timeHour[3];
-    strftime(timeHour,3, "%H", &timeinfo);
-    char timeMinute[3];
-    strftime(timeMinute,3, "%M", &timeinfo);
-
-    int displayTime = atoi(timeHour)*100 + atoi(timeMinute);
-    Serial.println(displayTime);
-    display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
-
-    webserver.setup();
-    webserver.begin();
-}
-
-void loop() {
-
-  // Don't Execute anything if it is setting up
-  if (isSetup) {
-      lightController.bounce();
-      return;
+  if (!passwordController.isExisting())
+  {
+    isSetup = true;
+  }
+  else
+  {
+    isSetup = !System::connectToWifi(&passwordController, Loading());
   }
 
+  if (isSetup)
+  {
+    WiFi.disconnect();
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP(name, passwort);
 
-  // Check every N th Millis
-  if (buttonRight.pressed && buttonLeft.pressed) { 
+    mdnsController.setup();
+
+    apWebserver.setupAP();
+    apWebserver.begin();
+    Serial.println(WiFi.softAPIP());
+  }
+
+  if (isSetup)
+  {
+    return;
+  }
+
+  // Setup jeancloud.local domain for local network
+  mdnsController.setup();
+
+  // Print ESP Local IP Address
+  Serial.println(WiFi.localIP());
+
+  // Init and get the time
+  configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+
+  struct tm timeinfo;
+
+  if (!getLocalTime(&timeinfo))
+  {
+    Serial.println("Failed to obtain time");
+    display.showNumberDec(0);
+    return;
+  }
+
+  char timeHour[3];
+  strftime(timeHour, 3, "%H", &timeinfo);
+  char timeMinute[3];
+  strftime(timeMinute, 3, "%M", &timeinfo);
+
+  int displayTime = atoi(timeHour) * 100 + atoi(timeMinute);
+  Serial.println(displayTime);
+  display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
+
+  webserver.setup();
+  webserver.begin();
+}
+
+void loop()
+{
+
+  // Don't Execute anything if it is setting up
+  if (isSetup)
+  {
+    lightController.bounce();
+    return;
+  }
+
+  EVERY_N_MILLIS(600)
+  {
+    if (buttonRight.pressed && buttonLeft.pressed)
+    {
       alarmController.stopAlarm();
-  } else {
-    if (buttonRight.pressed) {
-      alarmController.snooze();
-      buttonRight.pressed = false;
     }
-    
-    if (buttonLeft.pressed) {
-      alarmController.snooze();
-      buttonLeft.pressed = false;
+    else
+    {
+      if (buttonRight.pressed)
+      {
+        alarmController.snooze();
+        buttonRight.pressed = false;
+      }
+
+      if (buttonLeft.pressed)
+      {
+        alarmController.snooze();
+        buttonLeft.pressed = false;
+      }
     }
   }
 
   // put your main code here, to run repeatedly:
-  EVERY_N_MILLIS(200){
+  EVERY_N_MILLIS(200)
+  {
     struct tm timeinfo;
-    if(!getLocalTime(&timeinfo)){
+    if (!getLocalTime(&timeinfo))
+    {
       Serial.println("Failed to obtain time");
       display.showNumberDec(0);
       return;
@@ -157,10 +179,10 @@ void loop() {
     Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
 
     char timeHour[3];
-    strftime(timeHour,3, "%H", &timeinfo);
+    strftime(timeHour, 3, "%H", &timeinfo);
     char timeMinute[3];
-    strftime(timeMinute,3, "%M", &timeinfo);
-    int displayTime = atoi(timeHour)*100 + atoi(timeMinute);
+    strftime(timeMinute, 3, "%M", &timeinfo);
+    int displayTime = atoi(timeHour) * 100 + atoi(timeMinute);
     display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
     alarmController.loop(atoi(timeHour), atoi(timeMinute));
   }
