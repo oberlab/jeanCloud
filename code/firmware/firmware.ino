@@ -130,14 +130,18 @@ void loop() {
       return;
   }
 
-  if (buttonRight.pressed) {
-      Serial.printf("Button Right has been pressed %u times\n", buttonRight.numberKeyPresses);
+  if (buttonRight.pressed && buttonLeft.pressed) { 
+      alarmController.stopAlarm();
+  } else {
+    if (buttonRight.pressed) {
+      alarmController.snooze();
       buttonRight.pressed = false;
-  }
-
-  if (buttonLeft.pressed) {
-      Serial.printf("Button Left has been pressed %u times\n", buttonLeft.numberKeyPresses);
+    }
+    
+    if (buttonLeft.pressed) {
+      alarmController.snooze();
       buttonLeft.pressed = false;
+    }
   }
 
   // put your main code here, to run repeatedly:
@@ -156,6 +160,6 @@ void loop() {
     strftime(timeMinute,3, "%M", &timeinfo);
     int displayTime = atoi(timeHour)*100 + atoi(timeMinute);
     display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
-    alarmController.makeNoise(alarmController.checkAlarm(atoi(timeHour), atoi(timeMinute), alarmController.getAlarmStatus()));
+    alarmController.loop(atoi(timeHour), atoi(timeMinute));
   }
 }

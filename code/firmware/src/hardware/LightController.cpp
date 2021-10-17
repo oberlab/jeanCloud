@@ -42,8 +42,6 @@ void LightController::setIntenstiy(int _intensity) {
   intensity = _intensity;
 }
 
-
-
 void LightController::bounce() {
   EVERY_N_MILLIS(50){
     Serial.println(x);

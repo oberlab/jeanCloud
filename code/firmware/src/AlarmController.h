@@ -8,8 +8,10 @@ class AlarmController
         void on();
         void off();
         void setAlarm(int hour, int minute);
-        void makeNoise(bool triggered);
-        bool checkAlarm(int hour, int minute, bool status);
+        void stopAlarm();
+        void snooze();
+        void makeNoise();
+        void loop(int hour, int minute);
         bool getAlarmStatus();
         int getHour();
         int getMinute();
@@ -17,6 +19,11 @@ class AlarmController
     private:
         int alarmHour;
         int alarmMinute;
+        int snoozeMinute;
+        int snoozeCount;
         bool alarmStatus;
+        bool alarmStopped;
+        bool beeping;
+        bool compareAlarmMinutes(int hour, int minute, int offset);
 };
 #endif

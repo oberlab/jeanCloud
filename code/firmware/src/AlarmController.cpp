@@ -8,9 +8,10 @@ int channel = 0;
 int resolution = 8;
 
 AlarmController::AlarmController() {
-    alarmHour = 21;
-    alarmMinute = 57;
+    alarmHour = 8;
+    alarmMinute = 0;
     alarmStatus = true;
+    snoozeMinute = 5;
 
     // setup buzzer
     ledcSetup(channel, freq, resolution);
@@ -30,32 +31,52 @@ void AlarmController::setAlarm(int hour, int minute) {
     alarmMinute = minute;
 }
 
-void AlarmController::makeNoise(bool triggered) {
-    if (triggered){
-      ledcWrite(channel, 150);
-      ledcWriteTone(channel, 4000);
-      delay(100);
-      ledcWriteTone(channel, 0);
-      delay(500);
-      ledcWriteTone(channel, 4000);
-      delay(100);
-      ledcWriteTone(channel, 0);
-    }
-
+void AlarmController::makeNoise() {
+    ledcWrite(channel, 150);
+    ledcWriteTone(channel, 4000);
+    delay(100);
+    ledcWriteTone(channel, 0);
+    delay(500);
+    ledcWriteTone(channel, 4000);
+    delay(100);
+    ledcWriteTone(channel, 0);
 }
 
-bool AlarmController::checkAlarm(int hour, int minute, bool status) {
-    if (hour == alarmHour && minute == alarmMinute && status) {
-        return true;
+void AlarmController::snooze() {
+    if (beeping) {
+        beeping = false;
+        snoozeCount++;
+    }
+}
+
+void AlarmController::stopAlarm() {
+    if (beeping) {
+        beeping = false;
+        alarmStopped = true;
+    }
+}
+
+void AlarmController::loop(int hour, int minute) {
+    if (compareAlarmMinutes(hour, minute, 0) && getAlarmStatus()) {
+        beeping = true;
+        return makeNoise();
     } else {
-        return false;
+        if (compareAlarmMinutes(hour, minute, 1)) {
+            snoozeCount = 0;
+            alarmStopped = false;
+            beeping = false;
+        }
     }
 }
 
-bool AlarmController::getAlarmStatus(){
-    return alarmStatus;
-}
+bool AlarmController::getAlarmStatus() { return alarmStatus && !alarmStopped; }
 
 int AlarmController::getHour() { return alarmHour; }
 
 int AlarmController::getMinute() { return alarmMinute; }
+
+bool AlarmController::compareAlarmMinutes(int hour, int minute, int offset) {
+    int alarmMinutes = (alarmHour * 60) + alarmMinute + (snoozeMinute * snoozeCount);
+    int currentMinutes = (hour * 60) + minute;
+    return (alarmMinutes + offset) == currentMinutes;
+}

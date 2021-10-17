@@ -11,7 +11,7 @@ Webserver::Webserver(int port, LightController _lightController, AlarmController
     lightController = _lightController;
     alarmController = _alarmController;
     display = _display;
-    processor = [&](const String& var){
+    processor = [&](const String& var) {
       if (var == "LIGHT") {
         if (lightController.isActive()) {
           return String("checked");
@@ -41,7 +41,7 @@ Webserver::Webserver(int port, LightController _lightController, AlarmController
 }
 
 void Webserver::setupAP() {
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
     request->send(SPIFFS, "/indexAP.html", "text/html");
   });
 
