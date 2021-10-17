@@ -14,7 +14,7 @@ class LightController
         void bounce();
         void runner();
         void pulse();
-        void fadeBlue();
+        void flash_white();
         int getIntenstiy();
         int getRed();
         int getGreen();

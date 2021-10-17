@@ -116,6 +116,19 @@ void LightController::pulse() {
   }
 }
 
+void LightController::flash_white() {
+  fill_solid( leds, NUM_LEDS, CRGB(255, 255, 255));
+
+  EVERY_N_MILLIS(500){
+      FastLED.setBrightness(255);
+      FastLED.show();
+  }
+
+  EVERY_N_MILLIS(300){
+      FastLED.setBrightness(0);
+      FastLED.show();
+  }
+}
 
 void LightController::setPattern() {}
 
