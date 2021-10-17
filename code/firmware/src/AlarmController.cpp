@@ -7,7 +7,8 @@ int freq = 2000;
 int channel = 0;
 int resolution = 8;
 
-AlarmController::AlarmController() {
+AlarmController::AlarmController(LightController *_lightController) {
+    lightController = _lightController;
     alarmHour = 8;
     alarmMinute = 0;
     alarmStatus = true;
@@ -59,7 +60,8 @@ void AlarmController::stopAlarm() {
 void AlarmController::loop(int hour, int minute) {
     if (compareAlarmMinutes(hour, minute, 0) && getAlarmStatus()) {
         beeping = true;
-        return makeNoise();
+        makeNoise();
+        lightController->flash_white();
     } else {
         if (compareAlarmMinutes(hour, minute, 1)) {
             snoozeCount = 0;

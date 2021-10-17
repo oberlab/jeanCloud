@@ -1,10 +1,12 @@
 #ifndef alarmController_h
 #define alarmController_h
 
+#include "./hardware/LightController.h"
+
 class AlarmController
 {
     public:
-        AlarmController();
+        AlarmController(LightController *_lightController);
         void on();
         void off();
         void setAlarm(int hour, int minute);
@@ -17,6 +19,7 @@ class AlarmController
         int getMinute();
 
     private:
+        LightController *lightController;
         int alarmHour;
         int alarmMinute;
         int snoozeMinute;

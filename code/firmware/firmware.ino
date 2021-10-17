@@ -31,7 +31,7 @@ const int   daylightOffset_sec = 7200;
 
 MDNSController mdnsController = MDNSController(hostname, name);
 LightController lightController = LightController();
-AlarmController alarmController = AlarmController();
+AlarmController alarmController = AlarmController(&lightController);
 Webserver webserver = Webserver(80, lightController, &alarmController, &display);
 Webserver apWebserver = Webserver(80, lightController, &alarmController, &display);
 
@@ -130,6 +130,8 @@ void loop() {
       return;
   }
 
+
+  // Check every N th Millis
   if (buttonRight.pressed && buttonLeft.pressed) { 
       alarmController.stopAlarm();
   } else {
