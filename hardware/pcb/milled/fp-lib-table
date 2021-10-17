@@ -1,0 +1,5 @@
+(fp_lib_table
+  (lib (name JeanCloud_pcb_milled)(type KiCad)(uri "$(KIPRJMOD)/JeanCloud_pcb_milled.pretty")(options "")(descr ""))
+  (lib (name digikey-footprints)(type KiCad)(uri /home/alex/GitHub/digikey-kicad-library/digikey-footprints.pretty)(options "")(descr ""))
+  (lib (name esp32_devkit_v1_doit)(type KiCad)(uri ${KIPRJMOD}/footprints/esp32_devkit_v1_doit.pretty)(options "")(descr ""))
+)
