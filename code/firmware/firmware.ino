@@ -141,20 +141,21 @@ void loop() {
   }
 
   // put your main code here, to run repeatedly:
-  struct tm timeinfo;
-  if(!getLocalTime(&timeinfo)){
-    Serial.println("Failed to obtain time");
-    display.showNumberDec(0);
-    return;
-  }
-  Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
+  EVERY_N_MILLIS(200){
+    struct tm timeinfo;
+    if(!getLocalTime(&timeinfo)){
+      Serial.println("Failed to obtain time");
+      display.showNumberDec(0);
+      return;
+    }
+    Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
 
-  char timeHour[3];
-  strftime(timeHour,3, "%H", &timeinfo);
-  char timeMinute[3];
-  strftime(timeMinute,3, "%M", &timeinfo);
-  int displayTime = atoi(timeHour)*100 + atoi(timeMinute);
-  display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
-  alarmController.makeNoise(alarmController.checkAlarm(atoi(timeHour), atoi(timeMinute), alarmController.getAlarmStatus()));
-  delay(100);
+    char timeHour[3];
+    strftime(timeHour,3, "%H", &timeinfo);
+    char timeMinute[3];
+    strftime(timeMinute,3, "%M", &timeinfo);
+    int displayTime = atoi(timeHour)*100 + atoi(timeMinute);
+    display.showNumberDecEx(displayTime, 0b11100000, true); //Display the time value;
+    alarmController.makeNoise(alarmController.checkAlarm(atoi(timeHour), atoi(timeMinute), alarmController.getAlarmStatus()));
+  }
 }
