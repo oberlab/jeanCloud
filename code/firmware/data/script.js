@@ -28,7 +28,7 @@ async function setAlarm() {
     const hour = document.getElementById("wakeup-hour").value;
     const minute = document.getElementById("wakeup-minute").value;
 
-    if ((hour >= 0 && minute >= 0 ) && (hour <= 23 && minute <= 59)) {
+    if ((hour >= 0 && minute >= 0) && (hour <= 23 && minute <= 59)) {
         await fetch("/alarm/set?hour=" + hour + "&minute=" + minute);
     }
 }

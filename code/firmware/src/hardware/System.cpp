@@ -3,28 +3,32 @@
 #include <WiFi.h>
 #include "System.h"
 #include "../PasswordController.h"
-#include "../animations/Loading.cpp"
 
+bool System::connectToWifi(PasswordController *passwordController)
+{
+  int connectionTries = 0;
+  WiFi.begin(passwordController->getSSID().c_str(), passwordController->getPassword().c_str());
+  while (WiFi.status() != WL_CONNECTED && connectionTries <= 20)
+  {
+    delay(1000);
+    Serial.println(passwordController->getSSID().c_str());
+    Serial.println(passwordController->getPassword().c_str());
+    Serial.print("Connecting to WiFi.. Try: ");
+    Serial.println(connectionTries);
+    connectionTries++;
+  }
 
-bool System::connectToWifi(PasswordController *passwordController, Loading animation) {
-    int connectionTries = 0;
-    WiFi.begin(passwordController->getSSID().c_str(), passwordController->getPassword().c_str());
-    while (WiFi.status() != WL_CONNECTED && connectionTries <= 20) {
-      delay(1000);
-      Serial.println(passwordController->getSSID().c_str());
-      Serial.println(passwordController->getPassword().c_str());
-      Serial.print("Connecting to WiFi.. Try: ");
-      Serial.println(connectionTries);
-      connectionTries++;
-    }
-
-    return WiFi.status() == WL_CONNECTED;
+  return WiFi.status() == WL_CONNECTED;
 }
 
-void System::initFS() {
-  if (!SPIFFS.begin()) {
+void System::initFS()
+{
+  if (!SPIFFS.begin())
+  {
     Serial.println("An error has occurred while mounting SPIFFS");
-  } else {
+  }
+  else
+  {
     Serial.println("SPIFFS mounted successfully");
   }
 }

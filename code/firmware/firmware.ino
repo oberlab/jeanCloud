@@ -11,7 +11,6 @@
 #include "./src/PasswordController.h"
 #include "./src/hardware/System.h"
 #include "./src/Webserver.h"
-#include "./src/animations/Loading.cpp"
 
 char *name = "Konsti's JeanCloud";
 char *hostname = "jeancloud";
@@ -82,7 +81,7 @@ void setup()
   }
   else
   {
-    isSetup = !System::connectToWifi(&passwordController, Loading());
+    isSetup = !System::connectToWifi(&passwordController);
   }
 
   if (isSetup)

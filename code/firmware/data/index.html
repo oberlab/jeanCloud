@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>JeanCloud</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="script.js"></script>
 </head>
+
 <body>
     <img src="logo.svg" style="max-width: 300px;">
     <div class="content">
@@ -20,7 +22,8 @@
             <div class="card">
                 <p class="card-title">Helligkeit</p>
                 <p class="switch">
-                    <input type="range" onchange="setIntensity(this)" id="intensity-slider" min="0" max="255" step="1" value ="%INTENSITY%" class="slider">
+                    <input type="range" onchange="setIntensity(this)" id="intensity-slider" min="0" max="255" step="1"
+                        value="%INTENSITY%" class="slider">
                 </p>
                 <p class="state">Intensit&auml;t: <span id="intensity-slider-value">%INTENSITY%</span></p>
             </div>
@@ -30,21 +33,24 @@
             <div class="card">
                 <p class="card-title">Rot</p>
                 <p class="switch">
-                    <input type="range" onchange="setRGB(this, 'red')" id="red-slider" min="0" max="255" step="1" value ="%RED%" class="slider">
+                    <input type="range" onchange="setRGB(this, 'red')" id="red-slider" min="0" max="255" step="1"
+                        value="%RED%" class="slider">
                 </p>
                 <p class="state">Intensit&auml;t: <span id="red-slider-value">%RED%</span></p>
             </div>
             <div class="card">
                 <p class="card-title"> Gr&uuml;n </p>
                 <p class="switch">
-                    <input type="range" onchange="setRGB(this, 'green')" id="green-slider" min="0" max="255" step="1" value ="%GREEN%" class="slider">
+                    <input type="range" onchange="setRGB(this, 'green')" id="green-slider" min="0" max="255" step="1"
+                        value="%GREEN%" class="slider">
                 </p>
                 <p class="state">Intensit&auml;t: <span id="green-slider-value">%GREEN%</span></p>
             </div>
             <div class="card">
                 <p class="card-title">Blau</p>
                 <p class="switch">
-                    <input type="range" onchange="setRGB(this, 'blue')" id="blue-slider" min="0" max="255" step="1" value ="%BLUE%" class="slider">
+                    <input type="range" onchange="setRGB(this, 'blue')" id="blue-slider" min="0" max="255" step="1"
+                        value="%BLUE%" class="slider">
                 </p>
                 <p class="state">Intensit&auml;t: <span id="blue-slider-value">%BLUE%</span></p>
             </div>
@@ -61,8 +67,8 @@
             <div class="card">
                 <p class="card-title">Weckzeit</p>
                 <p class="switch">
-                    <input type="number" id="wakeup-hour" min="0" max="23" step="1" value ="%HOUR%">
-                    <input type="number" id="wakeup-minute" min="0" max="59" step="1" value ="%MINUTE%">
+                    <input type="number" id="wakeup-hour" min="0" max="23" step="1" value="%HOUR%">
+                    <input type="number" id="wakeup-minute" min="0" max="59" step="1" value="%MINUTE%">
                     <br />
                     <button onclick="setAlarm()">Speichern</button>
                 </p>
@@ -73,10 +79,12 @@
             <div class="card">
                 <p class="card-title">Display</p>
                 <p class="switch">
-                    <input type="range" onchange="setDisplayIntensity(this)" id="display-slider-value" min="0" max="7" step="1" value ="7" class="slider">
+                    <input type="range" onchange="setDisplayIntensity(this)" id="display-slider-value" min="0" max="7"
+                        step="1" value="7" class="slider">
                 </p>
             </div>
         </div>
     </div>
 </body>
+
 </html>

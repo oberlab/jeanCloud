@@ -3,12 +3,12 @@
 
 class MDNSController
 {
-    public:
-        MDNSController(char* _hostname, char* _instanceName);
-        bool setup();
+public:
+    MDNSController(char *_hostname, char *_instanceName);
+    bool setup();
 
-    private:
-        char* hostname;
-        char* instanceName;
+private:
+    char *hostname;
+    char *instanceName;
 };
 #endif
