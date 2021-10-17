@@ -96,6 +96,27 @@ void LightController::runner() {
   }
 }
 
+void LightController::pulse() {
+
+  EVERY_N_MILLIS(10){
+
+    FastLED.setBrightness(x);
+
+    if (x < 255 && up) {
+      x++;
+    } else if (x == 255 && up) {
+      up = false;
+      x--;
+    } else if (x == 0 && !up) {
+      up = true;
+    } else {
+      x--;
+    }
+    FastLED.show();
+  }
+}
+
+
 void LightController::setPattern() {}
 
 int LightController::getIntenstiy() { return intensity; }

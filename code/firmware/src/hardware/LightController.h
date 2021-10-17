@@ -13,6 +13,7 @@ class LightController
         void setPattern();
         void bounce();
         void runner();
+        void pulse();
         void fadeBlue();
         int getIntenstiy();
         int getRed();
