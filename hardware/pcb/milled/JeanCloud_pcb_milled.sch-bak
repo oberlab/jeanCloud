@@ -71,6 +71,8 @@ Wire Wire Line
 Wire Notes Line
 	3500 4350 3500 2500
 Wire Notes Line
+	7550 2500 7550 4350
+Wire Notes Line
 	7550 4350 3500 4350
 Text GLabel 4600 2000 0    50   Input ~ 0
 5V
@@ -79,12 +81,12 @@ GND
 Wire Notes Line
 	3500 2500 7550 2500
 $Comp
-L Connector:Conn_01x04_Male J2
+L Connector:Conn_01x04_Male J?
 U 1 1 61746ECA
 P 4850 1750
-F 0 "J2" V 4912 1894 50  0000 L CNN
+F 0 "J?" V 4912 1894 50  0000 L CNN
 F 1 "Conn_01x04_Male" V 5003 1894 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 4850 1750 50  0001 C CNN
+F 2 "" H 4850 1750 50  0001 C CNN
 F 3 "~" H 4850 1750 50  0001 C CNN
 	1    4850 1750
 	0    1    1    0   
@@ -106,12 +108,12 @@ Wire Wire Line
 Wire Wire Line
 	5550 2400 5550 2950
 $Comp
-L Connector:Conn_01x03_Male J3
+L Connector:Conn_01x03_Male J?
 U 1 1 6176D641
 P 6200 1750
-F 0 "J3" V 6262 1894 50  0000 L CNN
+F 0 "J?" V 6262 1894 50  0000 L CNN
 F 1 "Conn_01x03_Male" V 6353 1894 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 6200 1750 50  0001 C CNN
+F 2 "" H 6200 1750 50  0001 C CNN
 F 3 "~" H 6200 1750 50  0001 C CNN
 	1    6200 1750
 	0    1    1    0   
@@ -135,12 +137,12 @@ Wire Wire Line
 Wire Wire Line
 	5150 2600 6200 2600
 $Comp
-L Connector:Conn_01x02_Male J4
+L Connector:Conn_01x02_Male J?
 U 1 1 61779B20
 P 7500 1750
-F 0 "J4" V 7562 1794 50  0000 L CNN
+F 0 "J?" V 7562 1794 50  0000 L CNN
 F 1 "Conn_01x02_Male" V 7653 1794 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 7500 1750 50  0001 C CNN
+F 2 "" H 7500 1750 50  0001 C CNN
 F 3 "~" H 7500 1750 50  0001 C CNN
 	1    7500 1750
 	0    1    1    0   
@@ -158,23 +160,23 @@ Wire Wire Line
 Wire Wire Line
 	6350 2400 6350 2950
 $Comp
-L Connector:Conn_01x02_Male J5
+L Connector:Conn_01x02_Male J?
 U 1 1 6178287B
 P 8150 2750
-F 0 "J5" H 8122 2632 50  0000 R CNN
+F 0 "J?" H 8122 2632 50  0000 R CNN
 F 1 "Conn_01x02_Male" H 8122 2723 50  0000 R CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 8150 2750 50  0001 C CNN
+F 2 "" H 8150 2750 50  0001 C CNN
 F 3 "~" H 8150 2750 50  0001 C CNN
 	1    8150 2750
 	-1   0    0    1   
 $EndComp
 $Comp
-L Connector:Conn_01x02_Male J6
+L Connector:Conn_01x02_Male J?
 U 1 1 61783253
 P 8150 3150
-F 0 "J6" H 8122 3032 50  0000 R CNN
+F 0 "J?" H 8122 3032 50  0000 R CNN
 F 1 "Conn_01x02_Male" H 8122 3123 50  0000 R CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 8150 3150 50  0001 C CNN
+F 2 "" H 8150 3150 50  0001 C CNN
 F 3 "~" H 8150 3150 50  0001 C CNN
 	1    8150 3150
 	-1   0    0    1   
@@ -253,10 +255,4 @@ Text Notes 3500 2500 0    50   ~ 0
 ESP32 Dev Kit
 Text Notes 1600 2500 0    50   ~ 0
 MicroUSB
-Text GLabel 7150 3550 2    50   Input ~ 0
-GND
-Wire Notes Line
-	7550 2400 7550 4350
-Wire Wire Line
-	6950 3550 7150 3550
 $EndSCHEMATC
