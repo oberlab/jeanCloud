@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100.0mm"
+   height="100.0mm"
+   viewBox="0 0 100.0 100.0"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="JeanCloud_pcb_milled.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.6424131"
+     inkscape:cx="266.07192"
+     inkscape:cy="214.92766"
+     inkscape:window-width="1920"
+     inkscape:window-height="1051"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g834" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="[fixed] BG"
+     inkscape:groupmode="layer"
+     sodipodi:insensitive="true"
+     id="g832">
+    <rect
+       x="0"
+       y="0"
+       width="100.0"
+       height="100.0"
+       style="fill:#FFFFFF;fill-opacity:1;stroke:none"
+       id="rect830" />
+  </g>
+  <g
+     inkscape:label="Edge.Cuts"
+     inkscape:groupmode="layer"
+     id="g834"
+     style="display:inline">
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2172"
+       width="65"
+       height="49"
+       x="18.048117"
+       y="23.522415"
+       ry="14.741197" />
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path3055"
+       cx="29.457169"
+       cy="29.594925"
+       rx="2.1099999"
+       ry="2.1100554" />
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse3241"
+       cx="74.450722"
+       cy="32.1506"
+       rx="2.1099999"
+       ry="2.1100554" />
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse3243"
+       cx="29.457169"
+       cy="-67.417595"
+       rx="2.1099999"
+       ry="2.1100554"
+       transform="scale(1,-1)" />
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse3245"
+       cx="74.450722"
+       cy="-64.861923"
+       rx="2.1099999"
+       ry="2.1100554"
+       transform="scale(1,-1)" />
+  </g>
+  <g
+     inkscape:label="B.Cu"
+     inkscape:groupmode="layer"
+     id="g836" />
+  <g
+     inkscape:label="B.Mask"
+     inkscape:groupmode="layer"
+     id="g838" />
+  <g
+     inkscape:label="B.SilkS"
+     inkscape:groupmode="layer"
+     id="g840" />
+  <g
+     inkscape:label="F.Cu"
+     inkscape:groupmode="layer"
+     id="g842" />
+  <g
+     inkscape:label="F.Mask"
+     inkscape:groupmode="layer"
+     id="g844" />
+  <g
+     inkscape:label="F.SilkS"
+     inkscape:groupmode="layer"
+     id="g846" />
+  <g
+     inkscape:label="Dwgs.User"
+     inkscape:groupmode="layer"
+     id="g848" />
+  <g
+     inkscape:label="Drill"
+     inkscape:groupmode="layer"
+     id="g850">
+    <text
+       alignment-baseline="hanging"
+       font-size="4px"
+       style="font-style:normal;font-weight:normal;font-family:sans-serif;fill:#ff0000;stroke-linecap:round;stroke-linejoin:round"
+       text-anchor="middle"
+       id="text11"
+       x="13.429343"
+       y="-69.209068" />
+  </g>
+</svg>
