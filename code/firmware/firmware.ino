@@ -5,6 +5,7 @@
 #include <SPIFFS.h>
 #include <TM1637Display.h>
 #include <WiFi.h>
+#include <time.h>
 #include "./src/hardware/LightController.h"
 #include "./src/network/MDNSController.h"
 #include "./src/AlarmController.h"
@@ -24,9 +25,9 @@ char *passwort = "passwort123";
 TM1637Display display = TM1637Display(CLK, DIO);
 
 // time settings
-const char *ntpServer = "pool.ntp.org";
-const long gmtOffset_sec = 0;
-const int daylightOffset_sec = 7200;
+#define MY_NTP_SERVER "de.pool.ntp.org"  
+#define MY_TZ "CET-1CEST,M3.5.0/02,M10.5.0/03" // https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
+
 
 MDNSController mdnsController = MDNSController(hostname, name);
 LightController lightController = LightController();
@@ -109,7 +110,7 @@ void setup()
   Serial.println(WiFi.localIP());
 
   // Init and get the time
-  configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+  configTzTime(MY_TZ, MY_NTP_SERVER);
 
   struct tm timeinfo;
 
