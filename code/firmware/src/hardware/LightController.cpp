@@ -3,7 +3,7 @@
 #include "LightController.h"
 
 // fastLED configuration:
-#define NUM_LEDS 27 // set number of LEDs here
+#define NUM_LEDS 15 // set number of LEDs here
 #define LED_PIN 14
 #define LED_TYPE WS2811
 #define COLOR_ORDER GRB
