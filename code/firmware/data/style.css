@@ -68,7 +68,7 @@ body { margin: 0; }
 .oberlab-switch {
   position: relative;
   display: inline-block;
-  width: 60px;
+  width: 120px;
   height: 34px;
   margin: 30px;
 }

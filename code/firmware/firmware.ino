@@ -13,7 +13,7 @@
 #include "./src/hardware/System.h"
 #include "./src/Webserver.h"
 
-char *name = "Konsti's JeanCloud";
+char *name = "Nicolei's JeanCloud";
 char *hostname = "jeancloud";
 char *passwort = "passwort123";
 
